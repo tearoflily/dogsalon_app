@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'home', to: 'home#index'
+  root 'home#index'
 
   # namespace :api, format: 'json' do
   #   namespace :v1 do
