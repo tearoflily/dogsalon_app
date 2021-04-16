@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_16_143125) do
+ActiveRecord::Schema.define(version: 2021_04_16_162055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,11 +43,10 @@ ActiveRecord::Schema.define(version: 2021_04_16_143125) do
     t.string "first_name"
     t.string "furigana_last_name"
     t.string "furigana_first_name"
-    t.integer "postcode"
+    t.string "postcode"
     t.string "address", null: false
-    t.integer "homephone"
-    t.integer "mobilephone", null: false
-    t.string "images"
+    t.string "homephone"
+    t.string "mobilephone", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -95,6 +94,7 @@ ActiveRecord::Schema.define(version: 2021_04_16_143125) do
     t.bigint "customer_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.binary "image"
     t.index ["customer_id"], name: "index_pets_on_customer_id"
   end
 
