@@ -1,18 +1,35 @@
 <template>
-  <div id="app">
-    <p>{{ message }}</p>
+  <div>
+    <Header />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+import Header from './components/Header'
+import BookingIndexPage from 'BookingIndexPage.vue'
+import BookingDetailPage from 'BookingDetailPage.vue'
+
+const router = new VueRouter({
+  routes: [
+      { path: '/',
+        component: BookingIndexPage },
+      { path: '/api/v1/bookings/:id(\\d+)',
+        name: 'BookingDetailPage',
+        component: BookingDetailPage }
+  ]
+})
+
+Vue.use(VueRouter)
+
 export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
-    }
-  }
+    router,
+    components: {Header}
 }
+
 </script>
 
 <style scoped>
