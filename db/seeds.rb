@@ -40,7 +40,7 @@ end
   )
 end
 
-# Enqueteテーブル用データ生成 
+# Enqueteテーブル用データ生成
 Enquete.create!(
     know_shop: rand(0..4),
     know_shop_comment: "アンケート用備考欄のコメントをここに入力",
