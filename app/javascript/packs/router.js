@@ -14,7 +14,7 @@ export default new VueRouter({
   routes: [
     { path: '/',
       component: Home },
-    { path: '/employees/bookings/index',
+    { path: '/employees/bookings/',
       component: BookingIndexPage },
     { path: '/api/v1/bookings/:id(\\d+)',
       name: 'BookingDetailPage',
