@@ -36,8 +36,7 @@ end
     flea: flea,
     flea_comment: flea_comment,
     customer_request: customer_request,
-    customer_id: customer_id,
-    image: File.open('./app/assets/images/test.jpg')
+    customer_id: customer_id
   )
 end
 
