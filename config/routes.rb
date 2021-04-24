@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/employees/bookings/', to: 'home#index'
+  get '/employees/bookings/:id', to: 'home#index'
+
 
   # namespace :api, format: 'json' do
   #   namespace :v1 do
