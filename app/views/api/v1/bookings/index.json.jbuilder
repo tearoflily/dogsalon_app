@@ -1,5 +1,5 @@
 json.array! @bookings do |booking|
-  json.extract! booking, :id, :start_date_time,:end_date_time, :booking_shop_comment, :created_at, :updated_at
+  json.extract! booking, :id, :start_date_time, :end_date_time, :start_last_booking, :end_last_booking, :booking_shop_comment, :created_at, :updated_at
   json.last_name booking.customer.last_name
   json.pet_name booking.pet.pet_name
   json.menus do 

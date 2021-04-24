@@ -29,9 +29,10 @@
               <th>予約日時</th>
               <td>{{ b.start_date_time }}〜{{ b.end_date_time }}</td>
               <th>前回来店日時</th>
-              <td>'20/12/02</td>
-              <th>価格</th>
-              <td>¥10,000</td>
+              <td v-if="b.start_last_booking == 'Invalid Date'"></td>
+              <td v-else>{{ b.start_last_booking }}〜{{ b.end_last_booking }}</td>
+              <th>今回ご請求予定金額</th>
+              <td>{{ b.menus.menu_sum_price }}</td>
             </tr>
             <tr>
               <th>ショップ備考欄</th>
@@ -66,7 +67,10 @@ export default {
         bookings.map(function(booking) {
           booking.start_date_time = dayjs(booking.start_date_time).format('M月D日H:mm');
           booking.end_date_time = dayjs(booking.end_date_time).format('M月D日H:mm');
-          booking.menus.menu_and_price = `${booking.menus.menu_name}:${booking.menus.menu_price.toLocaleString('ja-JP')}円`;
+          booking.start_last_booking = dayjs(booking.start_last_booking).format('M月D日H:mm');
+          booking.end_last_booking = dayjs(booking.end_last_booking).format('M月D日H:mm');
+          booking.menus.menu_and_price = `${booking.menus.menu_name}`.replace(',',' / ');
+          booking.menus.menu_sum_price = `${booking.menus.menu_price.toLocaleString('ja-JP')}`;
         });
       })
     
