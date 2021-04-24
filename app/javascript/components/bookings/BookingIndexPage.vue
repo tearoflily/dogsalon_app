@@ -15,7 +15,7 @@
             </tr>
             <tr>
               <th>メニュー</th>
-              <td colspan="2">{{ b.menus.menu_name }}{{ b.menus.menu_price }}</td>
+              <td colspan="2">{{ b.menus.menu_and_price }}</td>
               <th>電子カルテ</th>
               <td colspan="2">確認ボタン</td>
             </tr>
@@ -27,7 +27,7 @@
             </tr>
             <tr>
               <th>予約日時</th>
-              <td>{{ b.start_date_time }}</td>
+              <td>{{ b.start_date_time }}〜{{ b.end_date_time }}</td>
               <th>前回来店日時</th>
               <td>'20/12/02</td>
               <th>価格</th>
@@ -48,7 +48,10 @@
 
 <script>
 import axios from 'axios'
-import moment from 'moment'
+import dayjs from 'dayjs'
+import 'dayjs/locale/ja'
+dayjs.locale(`ja`)
+
 export default {
   data: function () {
     return {
@@ -60,8 +63,13 @@ export default {
       .get('/api/v1/bookings.json')
       .then(response => (this.bookings = response.data))
       .then(function(bookings) {
-        result = bookings.map(booking => (this.start_date_time = booking.start_date_time.toISOString()));
+        bookings.map(function(booking) {
+          booking.start_date_time = dayjs(booking.start_date_time).format('M月D日H:mm');
+          booking.end_date_time = dayjs(booking.end_date_time).format('M月D日H:mm');
+          booking.menus.menu_and_price = `${booking.menus.menu_name}:${booking.menus.menu_price.toLocaleString('ja-JP')}円`;
+        });
       })
+    
   }
 
 }
