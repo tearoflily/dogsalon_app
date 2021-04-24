@@ -48,10 +48,10 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 export default {
   data: function () {
     return {
-
       bookings: []
     }
   },
@@ -59,6 +59,9 @@ export default {
     axios
       .get('/api/v1/bookings.json')
       .then(response => (this.bookings = response.data))
+      .then(function(bookings) {
+        result = bookings.map(booking => (this.start_date_time = booking.start_date_time.toISOString()));
+      })
   }
 
 }
