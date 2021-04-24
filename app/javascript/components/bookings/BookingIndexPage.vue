@@ -2,12 +2,12 @@
 
   <v-app id="app">
     <v-row justify="center" class="text-caption">
-      
         <table class="table table-bordered col-10 booking_index" outlined v-for="b in bookings" :key="b.id">
           <tbody>
   
            <tr>
-      
+       
+          
               <th>顧客名</th>
               <td colspan="2">{{ b.last_name }} 様</td>
               <th>ペット名</th>
@@ -15,7 +15,7 @@
             </tr>
             <tr>
               <th>メニュー</th>
-              <td colspan="2">カット id:{{ b.menu_id }}</td>
+              <td colspan="2">{{ b.menus.menu_name }}{{ b.menus.menu_price }}</td>
               <th>電子カルテ</th>
               <td colspan="2">確認ボタン</td>
             </tr>
@@ -60,6 +60,7 @@ export default {
       .get('/api/v1/bookings.json')
       .then(response => (this.bookings = response.data))
   }
+
 }
 </script>
 
