@@ -69,10 +69,10 @@ export default {
       .then(response => (this.bookings = response.data))
       .then(function(bookings) {
         bookings.map(function(booking) {
-          booking.start_date_time = dayjs(booking.start_date_time).format('M月D日H:mm');
-          booking.end_date_time = dayjs(booking.end_date_time).format('M月D日H:mm');
-          booking.start_last_booking = dayjs(booking.start_last_booking).format('M月D日H:mm');
-          booking.end_last_booking = dayjs(booking.end_last_booking).format('M月D日H:mm');
+          booking.start_date_time = dayjs(booking.start_date_time).format('YYYY/M/D/H:mm');
+          booking.end_date_time = dayjs(booking.end_date_time).format('YYYY/M/D/H:mm');
+          booking.start_last_booking = dayjs(booking.start_last_booking).format('YYYY/M/D/H:mm');
+          booking.end_last_booking = dayjs(booking.end_last_booking).format('YYYY/M/D/H:mm');
           booking.menus.menu_and_price = `${booking.menus.menu_name}`.replace(',',' / ');
           let sum_price = booking.menus.menu_price;
           let total = sum_price.reduce(function(sum, element){
