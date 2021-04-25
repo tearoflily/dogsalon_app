@@ -32,6 +32,12 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'dotenv-rails'
 gem 'rack-cors'
 gem 'active_decorator'
+gem 'rspec-rails', '~> 3.8'
+gem 'factory_bot_rails', '~> 5.1.0'
+
+gem 'capybara', '>= 2.15'
+gem 'selenium-webdriver'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
