@@ -11,7 +11,11 @@
               <th>顧客名</th>
               <td colspan="2">{{ b.last_name }} 様</td>
               <th>ペット名</th>
-              <td colspan="2">{{ b.pet_name }}</td>
+              <td colspan="2">
+                {{ b.pet_name }} <span v-if="b.pet_gender == 'オス'">くん</span>
+                <span v-else-if="b.pet_gender == 'メス'">ちゃん</span>
+                <span v-else></span>
+                </td>
             </tr>
             <tr>
               <th>メニュー</th>
@@ -37,7 +41,7 @@
             <tr>
               <th>ショップ備考欄</th>
               <td colspan="3">{{ b.booking_shop_comment }}</td>
-              <td><v-btn rounded color="primary" dark>編集</v-btn><router-link :to="{ name: 'BookingDetailPage', params: { id: b.id} }">{{ b.id }}</router-link></td>
+              <td><router-link :to="{ name: 'BookingDetailPage', params: { id: b.id} }"><v-btn rounded color="primary" dark>編集</v-btn></router-link></td>
               <td><v-btn text>削除</v-btn></td>
             </tr>
           </tbody>
@@ -70,7 +74,11 @@ export default {
           booking.start_last_booking = dayjs(booking.start_last_booking).format('M月D日H:mm');
           booking.end_last_booking = dayjs(booking.end_last_booking).format('M月D日H:mm');
           booking.menus.menu_and_price = `${booking.menus.menu_name}`.replace(',',' / ');
-          booking.menus.menu_sum_price = `${booking.menus.menu_price.toLocaleString('ja-JP')}`;
+          let sum_price = booking.menus.menu_price;
+          let total = sum_price.reduce(function(sum, element){
+            return sum + element;
+          },0);
+          booking.menus.menu_sum_price = `${total.toLocaleString('ja-JP')}円`;
         });
       })
     
