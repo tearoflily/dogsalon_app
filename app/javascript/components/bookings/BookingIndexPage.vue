@@ -1,6 +1,8 @@
 <template>
 
   <v-app id="app">
+  <router-link :to="{ name: 'BookingNew' }"><v-btn rounded color="primary" dark>新規予約</v-btn></router-link>
+
     <v-row justify="center" class="text-caption">
         <table class="table table-bordered col-10 booking_index" outlined v-for="b in bookings" :key="b.id">
           <tbody>

@@ -5,6 +5,10 @@ class Api::V1::BookingsController < ApplicationController
     render :formats => :json
   end
 
+  def new
+    
+  end
+
 
   def show
     render json: @booking
