@@ -9,6 +9,10 @@ class Api::V1::BookingsController < ApplicationController
     
   end
 
+  def create
+    
+  end
+
 
   def show
     render json: @booking
