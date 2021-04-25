@@ -1,18 +1,21 @@
 <template>
-  <div id="app">
-    <p>{{ message }}</p>
+  <div>
+    <Header />
+    トップページコンテンツ＊＊
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+
+
+import Header from './components/Header'
+
+
+
 export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
-    }
-  }
+    components: {Header}
 }
+
 </script>
 
 <style scoped>
