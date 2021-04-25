@@ -62,13 +62,6 @@ ActiveRecord::Schema.define(version: 2021_04_24_153537) do
     t.index ["customer_id"], name: "index_enquetes_on_customer_id"
   end
 
-  create_table "memos", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "menus", force: :cascade do |t|
     t.string "menu_name", null: false
     t.integer "breed", null: false
@@ -96,7 +89,7 @@ ActiveRecord::Schema.define(version: 2021_04_24_153537) do
     t.bigint "customer_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.binary "image"
+    t.binary "images"
     t.index ["customer_id"], name: "index_pets_on_customer_id"
   end
 
