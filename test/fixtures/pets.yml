@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pet_name: MyString
+  breed: 1
+  birthday: 2021-04-15 23:27:53
+  gender: 1
+  pet_comment: MyText
+  vaccine_day: 2021-04-15 23:27:53
+  hospital_name: MyString
+  dermatitis: false
+  dermatitis_comment: MyString
+  disease: false
+  disease_comment: MyString
+  flea: false
+  flea_comment: MyString
+  customer_request: MyText
+  references: 
+
+two:
+  pet_name: MyString
+  breed: 1
+  birthday: 2021-04-15 23:27:53
+  gender: 1
+  pet_comment: MyText
+  vaccine_day: 2021-04-15 23:27:53
+  hospital_name: MyString
+  dermatitis: false
+  dermatitis_comment: MyString
+  disease: false
+  disease_comment: MyString
+  flea: false
+  flea_comment: MyString
+  customer_request: MyText
+  references: 
