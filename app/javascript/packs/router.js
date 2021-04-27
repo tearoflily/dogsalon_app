@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../components/Home.vue';
 import BookingIndexPage from '../components/bookings/BookingIndexPage.vue';
 import BookingDetailPage from '../components/bookings/BookingDetailPage.vue';
+import BookingNew from '../components/bookings/BookingNew.vue';
 
 
 
@@ -18,7 +19,10 @@ export default new VueRouter({
       component: BookingIndexPage },
     { path: '/employees/bookings/:id(\\d+)',
       name: 'BookingDetailPage',
-      component: BookingDetailPage }
+      component: BookingDetailPage },
+    { path: '/employees/bookings/new/',
+      name: 'BookingNew',
+      component: BookingNew }
   ]
 })
 
