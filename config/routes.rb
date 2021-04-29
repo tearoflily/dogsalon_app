@@ -1,20 +1,17 @@
 Rails.application.routes.draw do
-  namespace :api do
-    namespace :v1 do
-      get 'auth/create'
-    end
-  end
   root 'home#index'
 
   namespace :api, format: 'json' do
     namespace :v1 do
-      resources :bookings, only: [:index, :show]
+      resources :bookings, only: [:index, :show, :new, :create]
       get 'bookings/index'
+      get 'auth/create'
     end
   end
 
   get '/employees/bookings/', to: 'home#index'
   get '/employees/bookings/:id', to: 'home#index'
+  get '/employees/bookings/new/', to: 'home#index'
 
 
   # namespace :api, format: 'json' do

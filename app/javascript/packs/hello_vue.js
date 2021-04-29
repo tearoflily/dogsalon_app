@@ -5,13 +5,14 @@
 // like app/views/layouts/application.html.erb.
 // All it does is render <div>Hello Vue</div> at the bottom of the page.
 
-import Vue from 'vue'
+import Vue from 'vue';
 import Vuetify from "vuetify";
 import 'vuetify/dist/vuetify.min.css';
 import App from '../app.vue';
 import router from './router';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+
 
 Vue.use(Vuetify);
 const vuetify = new Vuetify();
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     router,
     vuetify,
+
     render: h => h(App)
   }).$mount()
   document.body.appendChild(app.$el)
