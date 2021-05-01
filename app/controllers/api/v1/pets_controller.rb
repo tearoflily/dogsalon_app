@@ -8,7 +8,7 @@ class Api::V1::PetsController < ApplicationController
   end
 
   def show
-    render json: @pet
+    render json: @pet, include: [:customer, :bookings]
   end
 
   def new
