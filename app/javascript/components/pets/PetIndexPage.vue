@@ -2,89 +2,100 @@
   <v-app id="app">
     <v-row justify="center" align-content="center" class="text-caption">
       <v-form>
-    <v-container>
-      <v-row>
-        <v-col cols="10" sm="8" md="5">
-          <v-text-field label="顧客名"></v-text-field>
-        </v-col>
+        <v-container>
+          <v-row cols="8">
+            <v-col sm="4" md="5">
+              <v-text-field label="顧客名"></v-text-field>
+            </v-col>
 
-         <v-col cols="10" sm="8" md="5">
-          <v-text-field label="ペットのお名前"></v-text-field>
-        </v-col>
+          <v-col sm="4" md="5">
+            <v-text-field label="ペットのお名前"></v-text-field>
+          </v-col>
         
-        <v-col cols="10" sm="8" md="5">
-           <v-menu
-        ref="menu"
-        v-model="menu"
-        :close-on-content-click="false"
-        :return-value.sync="date"
-        transition="scale-transition"
-        offset-y
-        min-width="auto"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field
-            v-model="date"
-            label="前回来店日時"
-            prepend-icon="mdi-calendar"
-            readonly
-            v-bind="attrs"
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker
-          v-model="date"
-          no-title
-          scrollable
-        >
-          <v-spacer></v-spacer>
-          <v-btn
-            text
-            color="primary"
-            @click="menu = false"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            text
-            color="primary"
-            @click="$refs.menu.save(date)"
-          >
-            OK
-          </v-btn>
-        </v-date-picker>
-      </v-menu>
-        </v-col>
+          <v-col sm="4" md="5">
+            <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              :return-value.sync="date"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
 
-        <v-col cols="10" sm="8" md="5">
-          <v-select :items="items" label="前回メニュー"></v-select>
-        </v-col>
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="date"
+                label="前回来店日時"
+                prepend-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              >
+              </v-text-field>
+            </template>
 
-<div class="serch-btn">
-        <v-col cols="10" sm="4" md="2">
-          <v-btn label="serch_reset">リセット</v-btn>
-        </v-col>
-        </div>
-          
-      </v-row>
-    </v-container>
-  </v-form>
+              <v-date-picker
+                v-model="date"
+                no-title
+                scrollable
+              >
+              <v-spacer></v-spacer>
+                <v-btn
+                  text
+                  color="primary"
+                  @click="menu = false"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn
+                  text
+                  color="primary"
+                  @click="$refs.menu.save(date)"
+                >
+                OK
+                </v-btn>
+              </v-date-picker>
+            </v-menu>
+          </v-col>
 
-          <table class="table table-bordered col-8 pets_index" v-for="p in pets" :key="p.customer.id">
-             <tbody>
-            <tr>
-              <th>顧客名</th>
-              <td colspan="2">{{ p.customer.last_name }} {{ p.customer.first_name }} 様</td>
-               <th>ペット名</th>
-               <td colspan="2">{{ p.pet_name }}
-                 <span v-if="p.gender == 'オス'">くん</span>
-                 <span v-else-if="p.gender == 'メス'">ちゃん</span>
-                 <span v-else></span>
-               </td>
-               <td rowspan="2">
-                 <router-link :to="{ name: 'PetDetailPage', params: { id: p.id} }"><v-btn rounded color="primary" dark>詳細</v-btn></router-link>
-                </td> 
-            </tr>
+          <v-col sm="4" md="5">
+            <v-select
+                v-model="e6"
+                :items="items"
+                :menu-props="{ maxHeight: '400' }"
+                label="前回メニュー"
+                multiple
+                hint="メニューを選択してください（複数選択可）"
+                persistent-hint
+              ></v-select>
+            </v-col>
+
+            <div class="serch-btn">
+              <v-col sm="4" md="4">
+                <v-btn label="serch_reset">検索リセット</v-btn>
+              </v-col>
+            </div>
+          </v-row>
+        </v-container>
+      </v-form>
+
+      <table class="table table-bordered col-8 pets_index" v-for="p in pets" :key="p.customer.id">
+        <tbody>
+          <tr>
+            <th>顧客名</th>
+            <td colspan="2">{{ p.customer.last_name }} {{ p.customer.first_name }} 様</td>
+              <th>ペット名</th>
+              <td colspan="2">{{ p.pet_name }}
+                <span v-if="p.gender == 'オス'">くん</span>
+                <span v-else-if="p.gender == 'メス'">ちゃん</span>
+                <span v-else></span>
+              </td>
+              <td rowspan="2">
+                <router-link :to="{ name: 'PetDetailPage', params: { id: p.id} }"><v-btn rounded color="primary" dark>詳細</v-btn></router-link>
+              </td> 
+          </tr>
+
             <tr>
               <th>前回来店日時</th>
               <td colspan="2">
@@ -92,18 +103,15 @@
               </td>
               <th>前回メニュー</th>
               <td colspan="2">
-                 <span v-for="(b ,i) in p.bookings" :key="b.id" >
-                <span v-if="i === 0">
-                あああああああああああああああああ
+                <span v-for="(b ,i) in p.bookings" :key="b.id" >
+                  <span v-if="i === 0">
+                    XXXXXXXXXXXXXXXXXXX
+                  </span>
                 </span>
-              </span>
               </td>
-
             </tr>
-           
-        
         </tbody>
-        </table>
+      </table>
     </v-row>
   </v-app>
 </template>
@@ -116,7 +124,7 @@ export default {
   data() {
     return {
       pets: [],
-      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+      items: ['シャンプーセット', 'シャンプーカット', '爪切り'],
       date: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,
@@ -128,23 +136,16 @@ export default {
     axios
       .get('/api/v1/pets.json')
       .then(response => (this.pets = response.data))
-      .then(function(bookings) {
-        bookings.map(function(booking) {
-          booking.menus.menu_index = `${booking.menus.menu_name}`.replace(',',' / ');
-        });
-      })
   },
 
   filters: {
     moment: function (data) {
       return moment(data).format('YYYY/MM/DD HH:MM')
     }
-    }
-
-
   }
+}
 
-</script???>
+</script>
 
 <style scoped>
 p {
@@ -166,5 +167,4 @@ p {
   vertical-align: middle;
   text-align: center;
 }
-
 </style>
