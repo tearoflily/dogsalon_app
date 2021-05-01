@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    トップページコンテンツ＊＊
+    トップページコンテンツ＊＊＊＊
   </div>
 </template>
 
