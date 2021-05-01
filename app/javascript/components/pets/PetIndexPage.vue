@@ -1,10 +1,77 @@
-
-<template>
+<template　v-slot:activator="{ on }">
   <v-app id="app">
     <v-row justify="center" align-content="center" class="text-caption">
-      <table class="table table-bordered col-10 pets_index" v-for="p in pets" :key="p.customer.id">
-        <tbody>
-         
+      <v-form>
+    <v-container>
+      <v-row>
+        <v-col cols="10" sm="8" md="5">
+          <v-text-field label="顧客名"></v-text-field>
+        </v-col>
+
+         <v-col cols="10" sm="8" md="5">
+          <v-text-field label="ペットのお名前"></v-text-field>
+        </v-col>
+        
+        <v-col cols="10" sm="8" md="5">
+           <v-menu
+        ref="menu"
+        v-model="menu"
+        :close-on-content-click="false"
+        :return-value.sync="date"
+        transition="scale-transition"
+        offset-y
+        min-width="auto"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="date"
+            label="前回来店日時"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          v-model="date"
+          no-title
+          scrollable
+        >
+          <v-spacer></v-spacer>
+          <v-btn
+            text
+            color="primary"
+            @click="menu = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            text
+            color="primary"
+            @click="$refs.menu.save(date)"
+          >
+            OK
+          </v-btn>
+        </v-date-picker>
+      </v-menu>
+        </v-col>
+
+        <v-col cols="10" sm="8" md="5">
+          <v-select :items="items" label="前回メニュー"></v-select>
+        </v-col>
+
+<div class="serch-btn">
+        <v-col cols="10" sm="4" md="2">
+          <v-btn label="serch_reset">リセット</v-btn>
+        </v-col>
+        </div>
+          
+      </v-row>
+    </v-container>
+  </v-form>
+
+          <table class="table table-bordered col-8 pets_index" v-for="p in pets" :key="p.customer.id">
+             <tbody>
             <tr>
               <th>顧客名</th>
               <td colspan="2">{{ p.customer.last_name }} {{ p.customer.first_name }} 様</td>
@@ -27,7 +94,7 @@
               <td colspan="2">
                  <span v-for="(b ,i) in p.bookings" :key="b.id" >
                 <span v-if="i === 0">
-                 aaaaaaaaaaaaaaaaaa
+                あああああああああああああああああ
                 </span>
               </span>
               </td>
@@ -36,21 +103,24 @@
            
         
         </tbody>
-      </table>
+        </table>
     </v-row>
   </v-app>
 </template>
 
 <script>
-// axiosを読み込む
 import axios from 'axios';
 import moment from 'moment';
-
 
 export default {
   data() {
     return {
       pets: [],
+      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+      date: new Date().toISOString().substr(0, 10),
+      menu: false,
+      modal: false,
+      menu2: false,
     }
   },
 
@@ -74,12 +144,16 @@ export default {
 
   }
 
-</script>
+</script???>
 
 <style scoped>
 p {
   font-size: 2em;
   text-align: center;
+}
+
+.pets_index {
+  margin-top: 50px;
 }
 
 .pets_index th {
@@ -92,4 +166,5 @@ p {
   vertical-align: middle;
   text-align: center;
 }
+
 </style>
