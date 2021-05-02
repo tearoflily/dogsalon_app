@@ -1,11 +1,30 @@
 <template>
-<div>
-  <input class="form-control" type="text" v-model="inputedValue">
-  <p>{{ value }}</p>
+  <div>
+    <input class="form-control" type="text" v-model="inputedValue">
+    <p>{{ value }}</p>
 
-<!-- <v-calendar :attributes="attrs" ></v-calendar>    -->
-
-</div>
+      <v-calendar :columns="1" title-position="center">
+        <template slot='header-title' slot-scope='props'>
+          {{props.yearLabel}}年{{props.monthLabel}}
+        </template>
+        <template slot='day-content' slot-scope='props'>
+          <div class="cell-header">
+            {{ props.day.day }}
+          </div>
+          <div class="cell-content">
+            <template
+            v-if="dateList.some(date => date.ymd === dateToYYYYMMDD(props.day.date))">
+            <div
+            class="cell-content-line"
+            v-for="content in getContentFromKey(dateToYYYYMMDD(props.day.date))"
+            v-bind:key="content">
+            ・{{content}}
+            </div>
+            </template>
+          </div>
+       </template>
+      </v-calendar>
+  </div>
 </template>
 
 
@@ -16,20 +35,17 @@ export default {
       type: String
     },
   },
-  // data: { 
-  //   attrs: [
-  //       {
-  //         key: 'today',
-  //         highlight: {
-  //           backgroundColor: '#ff8080',
-  //         },
-  //         dates: new Date(),
-  //         popover: {
-  //           label: 'メッセージを表示できます',
-  //         },
-  //       }
-  //   ],
-  // },
+  data() {
+    return {
+      dateList: [
+        {ymd: '20210503', contents: ['髪を切る1','面談1','靴買う1']},
+        {ymd: '20210504', contents: ['髪を切る2','面談2','靴買う2']},
+        {ymd: '20210507', contents: ['髪を切る3','面談3','靴買う3']},
+        {ymd: '20210620', contents: ['髪を切る4','面談4','靴買う4']},
+        {ymd: '20210625', contents: ['髪を切る5','面談5','靴買う']},
+      ]
+    }
+  },
   computed: {
     inputedValue: {
       get() {
@@ -40,5 +56,20 @@ export default {
       },
     },
   },
+  methods: {
+    dateToYYYYMMDD: function(date) {
+      let y = date.getFullYear()
+      let m = ('00' + (date.getMonth()+1)).slice(-2)
+      let d = ('00' + date.getDate()).slice(-2)
+      let result = y + '' + m + '' + d
+      return result
+    },
+    getContentFromKey: function(key) {
+      const target = this.dateList.find((date) => {
+        return (date.ymd === key)
+      })
+      return target.contents
+    }
+  }
 };
 </script>
