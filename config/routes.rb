@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-  namespace :api, format: 'json' do
-    namespace :v1 do
-      resources :pets, only: [:index, :show]
-    end
-  end
   root 'home#index'
 
   namespace :api, format: 'json' do
