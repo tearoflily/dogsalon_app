@@ -12,6 +12,7 @@
     "element-ui": "^2.15.1",
     "qs": "^6.10.1",
     "turbolinks": "^5.2.0",
+    "v-calendar": "^3.0.0-alpha.3",
     "vue": "^2.6.12",
     "vue-ctk-date-time-picker": "^2.5.0",
     "vue-loader": "^15.9.6",
