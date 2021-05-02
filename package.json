@@ -9,6 +9,8 @@
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.21.2",
     "dayjs": "^1.10.4",
+    "element-ui": "^2.15.1",
+    "qs": "^6.10.1",
     "turbolinks": "^5.2.0",
     "vue": "^2.6.12",
     "vue-ctk-date-time-picker": "^2.5.0",
