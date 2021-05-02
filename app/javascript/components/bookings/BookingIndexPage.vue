@@ -2,7 +2,14 @@
 
   <v-app id="app">
   <router-link :to="{ name: 'BookingNew' }"><v-btn rounded color="primary" dark>新規予約</v-btn></router-link>
-
+  <v-card width="300px">
+    <v-form :model="query">
+        <v-text-field label="名前(姓)" v-model="query.last_name_eq" placeholder="名前(姓)"></v-text-field>
+        <v-text-field label="携帯電話" v-model="query.mobilephone_eq" placeholder="携帯電話"></v-text-field>
+  
+    </v-form>
+    <v-btn type="primary" @click="search">search</v-btn>
+  </v-card>
     <v-row justify="center" align-content="center" class="text-caption">
         <table class="table table-bordered col-10 booking_index" outlined v-for="b in bookings" :key="b.id">
           <tbody>
@@ -58,32 +65,52 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 dayjs.locale(`ja`)
+import qs from 'qs'
+
+
 
 export default {
   data: function () {
     return {
-      bookings: []
+      bookings: [],
+      query: {
+        last_name_eq: null,
+        mobilephone_eq: null
+      }
     }
   },
-  mounted () {
-    axios
-      .get('/api/v1/bookings.json')
-      .then(response => (this.bookings = response.data))
-      .then(function(bookings) {
-        bookings.map(function(booking) {
-          booking.start_date_time = dayjs(booking.start_date_time).format('YYYY/M/D/H:mm');
-          booking.end_date_time = dayjs(booking.end_date_time).format('YYYY/M/D/H:mm');
-          booking.start_last_booking = dayjs(booking.start_last_booking).format('YYYY/M/D/H:mm');
-          booking.end_last_booking = dayjs(booking.end_last_booking).format('YYYY/M/D/H:mm');
-          booking.menus.menu_and_price = `${booking.menus.menu_name}`.replace(',',' / ');
-          let sum_price = booking.menus.menu_price;
-          let total = sum_price.reduce(function(sum, element){
-            return sum + element;
-          },0);
-          booking.menus.menu_sum_price = `${total.toLocaleString('ja-JP')}円`;
-        });
+  created: function () {
+    this.search()
+  },
+  methods: {
+    notify: function(msg){
+      this.$notify({
+        type: 'error',
+        title: 'Error',
+        message: msg
+      });
+    },
+    search: function(){
+      axios.get('/api/v1/bookings', {
+        params: {
+          q: this.query
+        },
+        paramsSerializer: function(params) {
+          return qs.stringify(params, {arrayFormat: 'brackets'})
+        }
       })
+      .then((response) => {
     
+    
+        this.bookings = response.data;
+      
+          
+      })
+      .catch((error) => {
+        console.log(error);
+        this.notify(error.message);
+      })
+    }
   }
 
 }

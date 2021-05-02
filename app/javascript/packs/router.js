@@ -8,7 +8,6 @@ import PetIndexPage from '../components/pets/PetIndexPage.vue';
 import PetDetailPage from '../components/pets/PetDetailPage.vue';
 
 
-
 Vue.use(VueRouter)
 
 export default new VueRouter({

@@ -4,6 +4,7 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+#
 # 環境変数をgithubにアップロードしないために除外
 /.env
 
@@ -37,3 +38,6 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# vendor/bundleを除外する
+vendor/bundle

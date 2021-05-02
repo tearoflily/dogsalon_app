@@ -3,13 +3,17 @@
     <v-row justify="center" align-content="center" class="text-caption">
       <v-form>
         <v-container>
-          <v-row cols="8">
+          <colgroup v-for="n of 8" :key="n">
+            <col style="width:10%;">
+          </colgroup>
+
+          <v-row cols="9">
             <v-col sm="4" md="5">
-              <v-text-field label="顧客名"></v-text-field>
+              <v-text-field label="顧客名" v-model="serch_customer_name"></v-text-field>
             </v-col>
 
           <v-col sm="4" md="5">
-            <v-text-field label="ペットのお名前"></v-text-field>
+            <v-text-field label="ペットのお名前" v-model="serch_pet_name"></v-text-field>
           </v-col>
         
           <v-col sm="4" md="5">
@@ -80,7 +84,10 @@
         </v-container>
       </v-form>
 
-      <table class="table table-bordered col-8 pets_index" v-for="p in pets" :key="p.customer.id">
+      <table class="table table-bordered col-9 pets_index" v-for="p in search_pets" :key="p.customer.id">
+          <colgroup v-for="n of 9" :key="n">
+            <col style="width:10%;">
+          </colgroup>
         <tbody>
           <tr>
             <th>顧客名</th>
@@ -105,7 +112,7 @@
               <td colspan="2">
                 <span v-for="(b ,i) in p.bookings" :key="b.id" >
                   <span v-if="i === 0">
-                    XXXXXXXXXXXXXXXXXXX
+                    XXXXXXXXXXXXXXß
                   </span>
                 </span>
               </td>
@@ -125,10 +132,12 @@ export default {
     return {
       pets: [],
       items: ['シャンプーセット', 'シャンプーカット', '爪切り'],
-      date: new Date().toISOString().substr(0, 10),
+      date: null,
       menu: false,
       modal: false,
       menu2: false,
+      serch_pet_name: '',
+      serch_customer_name: '',
     }
   },
 
@@ -142,7 +151,14 @@ export default {
     moment: function (data) {
       return moment(data).format('YYYY/MM/DD HH:MM')
     }
-  }
+  },
+  computed: {
+    search_pets(){
+    　return this.pets.filter(p => {
+        return p.pet_name.includes(this.serch_pet_name) && p.customer.last_name.includes(this.serch_customer_name)
+    　})
+　 }
+  },
 }
 
 </script>
