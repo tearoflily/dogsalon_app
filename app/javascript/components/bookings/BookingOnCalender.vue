@@ -1,39 +1,58 @@
 <template>
-  <div>
-    <input class="form-control" type="text" v-model="inputedValue">
-    <p>{{ value }}</p>
-
-      <v-calendar :columns="1" title-position="center">
-        <template slot='header-title' slot-scope='props'>
-          {{props.yearLabel}}年{{props.monthLabel}}
-        </template>
-        <template slot='day-content' slot-scope='props'>
-          <div class="cell-header">
-            {{ props.day.day }}
-          </div>
-          <div class="cell-content">
-            <template
-            v-if="dateList.some(date => date.ymd === dateToYYYYMMDD(props.day.date))">
-            <div
-            class="cell-content-line"
-            v-for="content in getContentFromKey(dateToYYYYMMDD(props.day.date))"
-            v-bind:key="content">
-            ・{{content}}
-            </div>
+    <div>
+      <v-app>
+          
+      <input class="form-control" type="text" v-model="inputedValue">
+      <p>{{ value }}</p>
+      <v-sheet>
+        <v-calendar :columns="1" title-position="center">
+            <template slot='header-title' slot-scope='props'>
+              {{props.yearLabel}}年{{props.monthLabel}}
             </template>
-          </div>
-       </template>
-      </v-calendar>
-  </div>
+            <template slot='day-content' slot-scope='props'>
+              <div class="cell-header">
+                {{ props.day.day }}
+              </div>
+              <div class="cell-content">
+                <template
+                v-if="dateList.some(date => date.ymd === dateToYYYYMMDD(props.day.date))">
+                  <div
+                  class="cell-content-line"
+                  v-for="content in getContentFromKey(dateToYYYYMMDD(props.day.date))"
+                  v-bind:key="content">
+                  <button @click="openDisplay">・{{content}}</button>
+                  </div>
+                </template>
+                <template
+                v-else>
+                  <div
+                  class="cell-content-line">
+                  <button @click="openDisplay" style="width:100%;height:100%"><font size="1">登録する</font></button>
+                  </div>
+                </template>
+              </div>
+          </template>
+        </v-calendar>
+        </v-sheet>
+        <BookingOnCalenderDay ref="dlg"></BookingOnCalenderDay>
+        </v-app>
+    </div>
+  
 </template>
 
 
 <script>
+import BookingOnCalenderDay from './BookingOnCalenderDay.vue';
+
+
 export default {
   props:{
     value: {
       type: String
     },
+  },
+  components: {
+    BookingOnCalenderDay,
   },
   data() {
     return {
@@ -69,7 +88,13 @@ export default {
         return (date.ymd === key)
       })
       return target.contents
-    }
+    },
+    dayClick: function() {
+
+    },
+    openDisplay() {
+      this.$refs.dlg.isDisplay = true
+    },
   }
 };
 </script>
