@@ -23,6 +23,7 @@
             :events="bookings"
             :event-color="getEventColor"
             locale="ja-jp"
+            :formats="formats"
             :day-format="(timestamp) => new Date(timestamp.date).getDate()"
             :month-format="(timestamp) => new Date(timestamp.date).getMonth() + 1 + ' /'"
             @change="getEvents"
@@ -32,7 +33,7 @@
         </v-sheet>
       </div>
     </v-main>
-    <BookingOnCalenderDay ref="dlg" v-model="value"></BookingOnCalenderDay>
+    <!-- <BookingOnCalenderDay ref="dlg" v-model="value"></BookingOnCalenderDay> -->
   </v-app>
 </template>
 
@@ -47,6 +48,10 @@ export default {
     events: [],
     bookings: [],
     value: moment().format('yyyy-MM-DD'),
+    formats: {
+      start: 'HH:MM',
+      end: 'HH:MM',
+    }
   }),
   components: {
     // BookingOnCalenderDay,
@@ -76,63 +81,7 @@ export default {
     },
     getEvents() {
       const events = this.bookings;
-      this.bookings = events;
-
-
-      // const bookings = [
-      //   // new Dateからmomentに変更
-      //   {
-      //     name: '会議',
-      //     start: moment('2020-08-03 10:00:00').toDate(),
-      //     end: moment('2020-08-03 11:00:00').toDate(),
-      //     color: 'blue',
-      //     timed: true,
-      //   },
-      //   // イベントを追加
-      //   {
-      //     name: '休暇',
-      //     start: '2021-05-04 09:00:00',
-      //     end: '2021-05-04 11:00:00',
-      //     color: 'green',
-      //     timed: true,
-      //   },
-      //   {
-      //     name: '出張',
-      //     start: moment('2021-05-05').toDate(),
-      //     end: moment('2021-05-07').toDate(),
-      //     color: 'cyan',
-      //     timed: false,
-      //   },
-      //   {
-      //     name: '飲み会',
-      //     start: moment('2021-05-06').toDate(),
-      //     end: moment('2021-05-06').toDate(),
-      //     color: 'orange',
-      //     timed: false,
-      //   },
-      //   {
-      //     name: '打ち合わせ',
-      //     start: moment('2021-05-07 10:00').toDate(),
-      //     end: moment('2021-05-07 11:00').toDate(),
-      //     color: 'cyan',
-      //     timed: true,
-      //   },
-      //   {
-      //     name: '振り返り',
-      //     start: moment('2021-06-07 11:00:00').toDate(),
-      //     end: moment('2021-06-07 12:00').toDate(),
-      //     color: 'cyan',
-      //     timed: true,
-      //   },
-      //   {
-      //     name: '休暇',
-      //     start: moment('2021-06-07').toDate(),
-      //     end: moment('2021-06-11').toDate(),
-      //     color: 'green',
-      //     timed: false,
-      //   },
-      // ];
-      this.bookings;
+      return this.bookings = events;
     },
     getEventColor(bookings) {
       return bookings.color;
@@ -140,6 +89,15 @@ export default {
     // openDisplay() {
     //   this.$refs.dlg.isDisplay = true
     // },
+    // eventNameFormatter(event, timedEvent) {
+    //   if (timedEvent) {
+    //     return event.input.name;
+    //   }
+    //   if (event.allDay || !event.hasTime) {
+    //     return event.input.name;
+    //   }
+    //   return moment(String(event.start.time)).format('HH:MM') + " a" + event.input.name;
+    // }
   },
 };
 </script>

@@ -8,7 +8,7 @@
       </div>
     </div>
 
-    <div class="col-md-8 offset-md-2" v-if="page==1">
+    <div class="col-md-10 offset-md-1" v-if="page==1">
       <h1>お客様情報</h1>
       <div class="form-group">
       <label>名前</label>
