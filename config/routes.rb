@@ -8,9 +8,11 @@ Rails.application.routes.draw do
 
   namespace :api, format: 'json' do
     namespace :v1 do
-      resources :bookings, only: [:index, :show, :new, :create]
-      get 'bookings/index'
+      get 'bookings/month', to: 'bookings#month'
       get 'auth/create'
+      get 'bookings/oneday', to: 'bookings#oneday'
+      resources :bookings, only: [:index, :show, :new, :create]
+
     end
   end
 

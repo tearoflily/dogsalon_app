@@ -8,7 +8,7 @@
       </div>
     </div>
 
-    <div class="col-md-4 offset-md-4" v-if="page==1">
+    <div class="col-md-8 offset-md-2" v-if="page==1">
       <h1>お客様情報</h1>
       <div class="form-group">
       <label>名前</label>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="col-md-4 offset-md-4" v-if="page==2">
+    <div class="col-md-8 offset-md-2" v-if="page==2">
       <h1>配送情報</h1>
       <div class="form-group">
         <label>住所</label>
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="col-md-4 offset-md-4" v-if="page==3">
+    <div class="col-md-8 offset-md-2" v-if="page==3">
       
       <h1>本予約に関するコメント欄</h1>
       <div class="form-group">

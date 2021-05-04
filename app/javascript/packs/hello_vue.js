@@ -12,12 +12,8 @@ import App from '../app.vue';
 import router from './router';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import VCalendar from 'v-calendar';
 
 import '@mdi/font/css/materialdesignicons.css'
-
-Vue.use(VCalendar);
-
 Vue.use(Vuetify);
 const vuetify = new Vuetify();
 

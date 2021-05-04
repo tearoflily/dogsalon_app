@@ -1,100 +1,145 @@
 <template>
-    <div>
-      <v-app>
-          
-      <input class="form-control" type="text" v-model="inputedValue">
-      <p>{{ value }}</p>
-      <v-sheet>
-        <v-calendar :columns="1" title-position="center">
-            <template slot='header-title' slot-scope='props'>
-              {{props.yearLabel}}年{{props.monthLabel}}
-            </template>
-            <template slot='day-content' slot-scope='props'>
-              <div class="cell-header">
-                {{ props.day.day }}
-              </div>
-              <div class="cell-content">
-                <template
-                v-if="dateList.some(date => date.ymd === dateToYYYYMMDD(props.day.date))">
-                  <div
-                  class="cell-content-line"
-                  v-for="content in getContentFromKey(dateToYYYYMMDD(props.day.date))"
-                  v-bind:key="content">
-                  <button @click="openDisplay">・{{content}}</button>
-                  </div>
-                </template>
-                <template
-                v-else>
-                  <div
-                  class="cell-content-line">
-                  <button @click="openDisplay" style="width:100%;height:100%"><font size="1">登録する</font></button>
-                  </div>
-                </template>
-              </div>
-          </template>
-        </v-calendar>
+  <v-app>
+    <v-main>
+      <div>
+        {{ bookings }}
+        {{ events.first }}
+        <v-sheet tile height="6vh" color="grey lighten-3" class="d-flex align-center">
+          <v-btn outlined small class="ma-4" @click="setToday">
+            今日
+          </v-btn>
+          <v-btn icon @click="$refs.calendar.prev()">
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-btn>
+          <v-btn icon @click="$refs.calendar.next()">
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-btn>
+          <v-toolbar-title>{{ title }}</v-toolbar-title>
         </v-sheet>
-        <BookingOnCalenderDay ref="dlg"></BookingOnCalenderDay>
-        </v-app>
-    </div>
-  
+        <v-sheet height="100vh">
+          <v-calendar
+            ref="calendar"
+            v-model="value"
+            :events="bookings"
+            :event-color="getEventColor"
+            locale="ja-jp"
+            :day-format="(timestamp) => new Date(timestamp.date).getDate()"
+            :month-format="(timestamp) => new Date(timestamp.date).getMonth() + 1 + ' /'"
+            @change="getEvents"
+            @click:event="showEvent"
+            @click:date="viewDay"
+          ></v-calendar>
+        </v-sheet>
+      </div>
+    </v-main>
+    <BookingOnCalenderDay ref="dlg" v-model="value"></BookingOnCalenderDay>
+  </v-app>
 </template>
 
-
 <script>
+import axios from 'axios'
+import moment from 'moment';
 import BookingOnCalenderDay from './BookingOnCalenderDay.vue';
 
 
 export default {
-  props:{
-    value: {
-      type: String
-    },
-  },
+  data: () => ({
+    events: [],
+    bookings: [],
+    value: moment().format('yyyy-MM-DD'),
+  }),
   components: {
-    BookingOnCalenderDay,
-  },
-  data() {
-    return {
-      dateList: [
-        {ymd: '20210503', contents: ['髪を切る1','面談1','靴買う1']},
-        {ymd: '20210504', contents: ['髪を切る2','面談2','靴買う2']},
-        {ymd: '20210507', contents: ['髪を切る3','面談3','靴買う3']},
-        {ymd: '20210620', contents: ['髪を切る4','面談4','靴買う4']},
-        {ymd: '20210625', contents: ['髪を切る5','面談5','靴買う']},
-      ]
-    }
+    // BookingOnCalenderDay,
   },
   computed: {
-    inputedValue: {
-      get() {
-        return this.value;
-      },
-      set(newValue) {
-        this.$emit("input", newValue);
-      },
+    title() {
+      return moment(this.value).format('yyyy年 M月');
     },
   },
+  mounted () {
+    axios.get('/api/v1/bookings/month')
+    .then((response) => {
+      this.bookings = response.data;
+    })
+  },
   methods: {
-    dateToYYYYMMDD: function(date) {
-      let y = date.getFullYear()
-      let m = ('00' + (date.getMonth()+1)).slice(-2)
-      let d = ('00' + date.getDate()).slice(-2)
-      let result = y + '' + m + '' + d
-      return result
+    setToday() {
+      this.value = moment().format('yyyy-MM-DD');
     },
-    getContentFromKey: function(key) {
-      const target = this.dateList.find((date) => {
-        return (date.ymd === key)
-      })
-      return target.contents
-    },
-    dayClick: function() {
+    showEvent() {
+      this.$refs.dlg.isDisplay = true
 
     },
-    openDisplay() {
+    viewDay() {
       this.$refs.dlg.isDisplay = true
+  
     },
-  }
+    getEvents() {
+      const events = this.bookings;
+      this.bookings = events;
+
+
+      // const bookings = [
+      //   // new Dateからmomentに変更
+      //   {
+      //     name: '会議',
+      //     start: moment('2020-08-03 10:00:00').toDate(),
+      //     end: moment('2020-08-03 11:00:00').toDate(),
+      //     color: 'blue',
+      //     timed: true,
+      //   },
+      //   // イベントを追加
+      //   {
+      //     name: '休暇',
+      //     start: '2021-05-04 09:00:00',
+      //     end: '2021-05-04 11:00:00',
+      //     color: 'green',
+      //     timed: true,
+      //   },
+      //   {
+      //     name: '出張',
+      //     start: moment('2021-05-05').toDate(),
+      //     end: moment('2021-05-07').toDate(),
+      //     color: 'cyan',
+      //     timed: false,
+      //   },
+      //   {
+      //     name: '飲み会',
+      //     start: moment('2021-05-06').toDate(),
+      //     end: moment('2021-05-06').toDate(),
+      //     color: 'orange',
+      //     timed: false,
+      //   },
+      //   {
+      //     name: '打ち合わせ',
+      //     start: moment('2021-05-07 10:00').toDate(),
+      //     end: moment('2021-05-07 11:00').toDate(),
+      //     color: 'cyan',
+      //     timed: true,
+      //   },
+      //   {
+      //     name: '振り返り',
+      //     start: moment('2021-06-07 11:00:00').toDate(),
+      //     end: moment('2021-06-07 12:00').toDate(),
+      //     color: 'cyan',
+      //     timed: true,
+      //   },
+      //   {
+      //     name: '休暇',
+      //     start: moment('2021-06-07').toDate(),
+      //     end: moment('2021-06-11').toDate(),
+      //     color: 'green',
+      //     timed: false,
+      //   },
+      // ];
+      this.bookings;
+    },
+    getEventColor(bookings) {
+      return bookings.color;
+    },
+    // openDisplay() {
+    //   this.$refs.dlg.isDisplay = true
+    // },
+  },
 };
 </script>
