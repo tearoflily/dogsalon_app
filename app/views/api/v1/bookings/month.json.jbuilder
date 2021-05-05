@@ -7,9 +7,7 @@ if @booking_count > 1
       json.end booking.end_date_time.strftime("%Y-%m-%d %H:%M")
       json.color 'blue'
       json.timed true
-
     end
-
 end
 
 

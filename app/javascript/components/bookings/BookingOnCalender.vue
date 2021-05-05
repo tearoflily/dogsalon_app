@@ -2,8 +2,8 @@
   <v-app>
     <v-main>
       <div>
-        {{ bookings }}
-        {{ events.first }}
+        ★input_time {{ input_time }}★
+  
         <v-sheet tile height="6vh" color="grey lighten-3" class="d-flex align-center">
           <v-btn outlined small class="ma-4" @click="setToday">
             今日
@@ -23,7 +23,6 @@
             :events="bookings"
             :event-color="getEventColor"
             locale="ja-jp"
-            :formats="formats"
             :day-format="(timestamp) => new Date(timestamp.date).getDate()"
             :month-format="(timestamp) => new Date(timestamp.date).getMonth() + 1 + ' /'"
             @change="getEvents"
@@ -33,7 +32,7 @@
         </v-sheet>
       </div>
     </v-main>
-    <!-- <BookingOnCalenderDay ref="dlg" v-model="value"></BookingOnCalenderDay> -->
+    <BookingOnCalenderDay ref="dlg" v-model="value_click" @set-time-event="inputWorkTime"></BookingOnCalenderDay>
   </v-app>
 </template>
 
@@ -48,13 +47,11 @@ export default {
     events: [],
     bookings: [],
     value: moment().format('yyyy-MM-DD'),
-    formats: {
-      start: 'HH:MM',
-      end: 'HH:MM',
-    }
+    value_click: '',
+    input_time: '',
   }),
   components: {
-    // BookingOnCalenderDay,
+    BookingOnCalenderDay,
   },
   computed: {
     title() {
@@ -71,12 +68,14 @@ export default {
     setToday() {
       this.value = moment().format('yyyy-MM-DD');
     },
-    showEvent() {
+    showEvent(day) {
+      this.value_click = day;
       this.$refs.dlg.isDisplay = true
 
     },
-    viewDay() {
-      this.$refs.dlg.isDisplay = true
+    viewDay(day) {
+      this.value_click = day;
+      this.$refs.dlg.isDisplay = true;
   
     },
     getEvents() {
@@ -86,6 +85,14 @@ export default {
     getEventColor(bookings) {
       return bookings.color;
     },
+    inputWorkTime(payload) {
+      this.input_time = payload;
+      this.inputEmit();
+    },
+
+    inputEmit() {
+      this.$emit('set-time-event-child', this.input_time);
+    }
     // openDisplay() {
     //   this.$refs.dlg.isDisplay = true
     // },
