@@ -155,7 +155,6 @@ export default {
         　return this.pets.filter(p => {
             return p.pet_name.includes(this.search_pet_name)
             && p.last_name.includes(this.search_customer_name)
-            && p.start_last_booking?.include(this.search_last_visit)
     　})
 　 }
   },
