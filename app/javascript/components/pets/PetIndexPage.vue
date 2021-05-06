@@ -48,7 +48,7 @@
                 <v-btn
                   text
                   color="primary"
-                  @click="search_last_visit = ''"
+                  @click="search_last_visit = null"
                 >
                   Cancel
                 </v-btn>
@@ -110,7 +110,7 @@
               </td>
               <th>前回メニュー</th>
               <td colspan="2">
-                    XXXXXXXXXXXXXXß
+                
               </td>
             </tr>
         </tbody>
@@ -128,7 +128,7 @@ export default {
     return {
       pets: [],
       items: ['シャンプーセット', 'シャンプーカット', '爪切り'],
-      date: '',
+      date: null,
       menu: false,
       modal: false,
       menu2: false,
@@ -155,7 +155,6 @@ export default {
         　return this.pets.filter(p => {
             return p.pet_name.includes(this.search_pet_name)
             && p.last_name.includes(this.search_customer_name)
-            && p.start_last_booking?.include(this.search_last_visit)
     　})
 　 }
   },
