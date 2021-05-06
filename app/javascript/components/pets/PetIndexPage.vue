@@ -9,11 +9,11 @@
 
           <v-row cols="9">
             <v-col sm="4" md="5">
-              <v-text-field label="顧客名" v-model="serch_customer_name" onpaste="return false" autocomplete="off"></v-text-field>
+              <v-text-field label="顧客名" v-model="search_customer_name" onpaste="return false" autocomplete="off" ></v-text-field>
             </v-col>
 
           <v-col sm="4" md="5">
-            <v-text-field label="ペットのお名前" v-model="serch_pet_name" onpaste="return false" autocomplete="off"></v-text-field>
+            <v-text-field label="ペットのお名前" v-model="search_pet_name" onpaste="return false" autocomplete="off"></v-text-field>
           </v-col>
         
           <v-col sm="4" md="5">
@@ -29,7 +29,7 @@
 
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                v-model="date"
+                v-model="search_last_visit"
                 label="前回来店日時"
                 prepend-icon="mdi-calendar"
                 readonly
@@ -40,7 +40,7 @@
             </template>
 
               <v-date-picker
-                v-model="date"
+                v-model="search_last_visit"
                 no-title
                 scrollable
               >
@@ -48,7 +48,7 @@
                 <v-btn
                   text
                   color="primary"
-                  @click="menu = false"
+                  @click="search_last_visit = null"
                 >
                   Cancel
                 </v-btn>
@@ -136,8 +136,9 @@ export default {
       menu: false,
       modal: false,
       menu2: false,
-      serch_pet_name: '',
-      serch_customer_name: '',
+      search_pet_name: '',
+      search_customer_name: '',
+      search_last_visit: '',
     }
   },
 
@@ -154,8 +155,11 @@ export default {
   },
   computed: {
     search_pets(){
-    　return this.pets.filter(p => {
-        return p.pet_name.includes(this.serch_pet_name) && p.customer.last_name.includes(this.serch_customer_name)
+        
+        　return this.pets.filter(p => {
+            return p.pet_name.includes(this.search_pet_name)
+            && p.customer.last_name.includes(this.search_customer_name)
+            
     　})
 　 }
   },
