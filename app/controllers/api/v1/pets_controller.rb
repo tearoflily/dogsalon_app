@@ -3,8 +3,8 @@ class Api::V1::PetsController < ApplicationController
 
   def index
 
-    pets = Pet.all
-    render json: pets, include: [:customer, :bookings]
+    @pets = Pet.all
+    render :formats => :json and return
   end
 
   def show

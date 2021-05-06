@@ -9,11 +9,11 @@
 
           <v-row cols="9">
             <v-col sm="4" md="5">
-              <v-text-field label="顧客名" v-model="search_customer_name" onpaste="return false" autocomplete="off" ></v-text-field>
+              <v-text-field label="顧客名" v-model="search_customer_name" ></v-text-field>
             </v-col>
 
           <v-col sm="4" md="5">
-            <v-text-field label="ペットのお名前" v-model="search_pet_name" onpaste="return false" autocomplete="off"></v-text-field>
+            <v-text-field label="ペットのお名前" v-model="search_pet_name"></v-text-field>
           </v-col>
         
           <v-col sm="4" md="5">
@@ -48,7 +48,7 @@
                 <v-btn
                   text
                   color="primary"
-                  @click="search_last_visit = null"
+                  @click="search_last_visit = ''"
                 >
                   Cancel
                 </v-btn>
@@ -84,14 +84,14 @@
         </v-container>
       </v-form>
 
-      <table class="table table-bordered col-9 pets_index" v-for="p in search_pets" :key="p.customer.id">
+      <table class="table table-bordered col-9 pets_index" v-for="p in search_pets" :key="p.id">
           <colgroup v-for="n of 9" :key="n">
             <col style="width:10%;">
           </colgroup>
         <tbody>
           <tr>
             <th>顧客名</th>
-            <td colspan="2">{{ p.customer.last_name }} {{ p.customer.first_name }} 様</td>
+            <td colspan="2">{{ p.last_name }} {{ p.first_name }} 様</td>
               <th>ペット名</th>
               <td colspan="2">{{ p.pet_name }}
                 <span v-if="p.gender == 'オス'">くん</span>
@@ -106,15 +106,11 @@
             <tr>
               <th>前回来店日時</th>
               <td colspan="2">
-                {{ p.bookings.start_last_booking | moment }}
+                {{ p.start_last_booking | moment }} 
               </td>
               <th>前回メニュー</th>
               <td colspan="2">
-                <span v-for="(b ,i) in p.bookings" :key="b.id" >
-                  <span v-if="i === 0">
                     XXXXXXXXXXXXXXß
-                  </span>
-                </span>
               </td>
             </tr>
         </tbody>
@@ -132,7 +128,7 @@ export default {
     return {
       pets: [],
       items: ['シャンプーセット', 'シャンプーカット', '爪切り'],
-      date: null,
+      date: '',
       menu: false,
       modal: false,
       menu2: false,
@@ -158,8 +154,8 @@ export default {
         
         　return this.pets.filter(p => {
             return p.pet_name.includes(this.search_pet_name)
-            && p.customer.last_name.includes(this.search_customer_name)
-            
+            && p.last_name.includes(this.search_customer_name)
+            && p.start_last_booking?.include(this.search_last_visit)
     　})
 　 }
   },
