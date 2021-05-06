@@ -106,7 +106,7 @@
             <tr>
               <th>前回来店日時</th>
               <td colspan="2">
-                {{ p.start_last_booking | moment }} 
+                {{ p.bookings.start_last_booking | moment }} 
               </td>
               <th>前回メニュー</th>
               <td colspan="2">
