@@ -110,7 +110,9 @@
               </td>
               <th>前回メニュー</th>
               <td colspan="2">
-                
+                <span v-for="m_n in p.bookings.menu_name" :key="m_n.id">
+                  {{ m_n }}<br>
+                </span>
               </td>
             </tr>
         </tbody>
