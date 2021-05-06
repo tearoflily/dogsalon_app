@@ -48,7 +48,7 @@
                 <v-btn
                   text
                   color="primary"
-                  @click="search_last_visit = ''"
+                  @click="search_last_visit = null"
                 >
                   Cancel
                 </v-btn>
@@ -110,7 +110,9 @@
               </td>
               <th>前回メニュー</th>
               <td colspan="2">
-                    XXXXXXXXXXXXXXß
+                <span v-for="m_n in p.bookings.menu_name" :key="m_n.id">
+                  {{ m_n }}<br>
+                </span>
               </td>
             </tr>
         </tbody>
@@ -128,7 +130,7 @@ export default {
     return {
       pets: [],
       items: ['シャンプーセット', 'シャンプーカット', '爪切り'],
-      date: '',
+      date: null,
       menu: false,
       modal: false,
       menu2: false,

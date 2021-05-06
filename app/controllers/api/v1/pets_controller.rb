@@ -4,6 +4,7 @@ class Api::V1::PetsController < ApplicationController
   def index
 
     @pets = Pet.all
+    @bookings = Booking.all
     render :formats => :json and return
   end
 
