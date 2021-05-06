@@ -9,11 +9,11 @@
 
           <v-row cols="9">
             <v-col sm="4" md="5">
-              <v-text-field label="顧客名" v-model="serch_customer_name"></v-text-field>
+              <v-text-field label="顧客名" v-model="serch_customer_name" onpaste="return false" autocomplete="off"></v-text-field>
             </v-col>
 
           <v-col sm="4" md="5">
-            <v-text-field label="ペットのお名前" v-model="serch_pet_name"></v-text-field>
+            <v-text-field label="ペットのお名前" v-model="serch_pet_name" onpaste="return false" autocomplete="off"></v-text-field>
           </v-col>
         
           <v-col sm="4" md="5">
