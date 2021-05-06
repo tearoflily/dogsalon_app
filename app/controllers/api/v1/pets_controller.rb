@@ -8,8 +8,9 @@ class Api::V1::PetsController < ApplicationController
   end
 
   def show
-    pets = Pet.where(customer_id: @pet.customer_id)
-    render json: [@pet, pets], include: [:customer, :bookings]
+    @pets = Pet.where(customer_id: @pet.customer_id)
+    @bookings = Booking.where(pet_id: params[:id])
+    render :formats => :json and return
   end
 
   def new
