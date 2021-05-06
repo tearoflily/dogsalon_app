@@ -48,7 +48,7 @@
                 <v-btn
                   text
                   color="primary"
-                  @click="search_last_visit = null"
+                  @click="search_last_visit = ''"
                 >
                   Cancel
                 </v-btn>
@@ -65,7 +65,7 @@
 
           <v-col sm="4" md="5">
             <v-select
-                v-model="e6"
+                v-model="search_menu_name"
                 :items="items"
                 :menu-props="{ maxHeight: '400' }"
                 label="前回メニュー"
@@ -130,13 +130,14 @@ export default {
     return {
       pets: [],
       items: ['シャンプーセット', 'シャンプーカット', '爪切り'],
-      date: null,
+      date: '',
       menu: false,
       modal: false,
       menu2: false,
       search_pet_name: '',
       search_customer_name: '',
       search_last_visit: '',
+      search_menu_name: '',
     }
   },
 
@@ -157,6 +158,8 @@ export default {
         　return this.pets.filter(p => {
             return p.pet_name.includes(this.search_pet_name)
             && p.last_name.includes(this.search_customer_name)
+            
+
     　})
 　 }
   },
