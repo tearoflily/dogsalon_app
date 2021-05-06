@@ -16,27 +16,27 @@
         <tbody>
           <tr>
             <th colspan="2">ふりがな</th>
-            <td colspan="8" >{{ p.c.furigana_last_name }} {{ p.c.furigana_first_name }}様</td>
+            <td colspan="8" >{{ p.customer.furigana_last_name }} {{ p.customer.furigana_first_name }}様</td>
           </tr>
 
           <tr>
             <th colspan="2">顧客名</th>
-            <td colspan="8">{{ p.c.last_name }} {{ p.c.first_name }}様</td>
+            <td colspan="8">{{ p.customer.last_name }} {{ p.customer.first_name }}様</td>
           </tr>
 
           <tr>
             <th colspan="2" rowspan="2">住所</th>
-            <td colspan="8" style="border-bottom:none;">{{ p.c.postcode }}</td>
+            <td colspan="8" style="border-bottom:none;">{{ p.customer.postcode }}</td>
           </tr>
 
           <tr>
-            <td colspan="8" style="border-top:none;">{{ p.c.address }}</td>
+            <td colspan="8" style="border-top:none;">{{ p.customer.address }}</td>
           </tr>
 
           <tr>
               <th colspan="2">ご連絡先</th>
-              <td colspan="4" style="border-right:none;">ご自宅 {{ p.c.homephone }}</td>
-              <td colspan="4" style="border-left:none;">携帯電話 {{ p.c.mobilephone }}</td>
+              <td colspan="4" style="border-right:none;">ご自宅 {{ p.customer.homephone }}</td>
+              <td colspan="4" style="border-left:none;">携帯電話 {{ p.customer.mobilephone }}</td>
           </tr>
         </tbody>
 
@@ -46,7 +46,7 @@
           </tr>
 
           <tr>
-            <td colspan="10" >{{p.p.pet_comment}}</td>
+            <td colspan="10" >{{p.pet.pet_comment}}</td>
           </tr>
         </tbody>
         
@@ -57,14 +57,14 @@
 
           <tr>
             <th colspan="3">日時</th>
-            <th colspan="3">メニュー</th>
-            <th colspan="4">価格</th>
+            <th colspan="4">メニュー</th>
+            <th colspan="3">価格</th>
           </tr>
           
-          <tr v-for="ms in p.ms" :key="ms.id">
-              <td colspan="3">{{ms.start_last_booking | moment}}</td>
-              <td colspan="3"><span v-for="m_m in ms.menu_name" :key="m_m.id">{{m_m}}<br></span></td>
-              <td  colspan="4"><span v-for="m_p in ms.price" :key="m_p.id">¥{{m_p | price}}円<br></span></td>
+          <tr v-for="menus in p.menus" :key="menus.id">
+              <td colspan="3">{{menus.start_last_booking | moment}}</td>
+              <td colspan="4"><span v-for="m_menu_name in menus.menu_name" :key="m_menu_name.id">{{m_menu_name}}<br></span></td>
+              <td  colspan="3"><span v-for="m_price in menus.price" :key="m_price.id">¥{{m_price.toLocaleString()}}円<br></span></td>
           </tr>
         </tbody>
 
@@ -75,14 +75,14 @@
 
           <tr>
             <th colspan="3">ペットのお名前</th>
-            <th colspan="3">年齢</th>
-            <th colspan="4">犬種</th>
+            <th colspan="4">年齢</th>
+            <th colspan="3">犬種</th>
           </tr>
 
-          <tr v-for="ps in p.ps" :key="ps.id">
-            <td colspan="3">{{ps.pet_name}}</td>
-            <td colspan="3">{{ps.birthday | moment}}</td>
-            <td colspan="4">{{ps.breed}}</td>
+          <tr v-for="pets in p.pets" :key="pets.id">
+            <td colspan="3">{{pets.pet_name}}</td>
+            <td colspan="4">{{pets.birthday | moment}}</td>
+            <td colspan="3">{{pets.breed}}</td>
           </tr>
         </tbody>
 
@@ -93,17 +93,17 @@
 
           <tr>
             <th colspan="2">ペットのお名前</th>
-            <td colspan="8">{{p.p.pet_name}}</td>
+            <td colspan="8">{{p.pet.pet_name}}</td>
           </tr>
 
           <tr>
             <th colspan="2">犬種</th>
-            <td colspan="8">{{p.p.breed}}</td>
+            <td colspan="8">{{p.pet.breed}}</td>
           </tr>
 
           <tr>
             <th colspan="2">お誕生日</th>
-            <td colspan="2">{{p.p.birthday | moment}}</td>
+            <td colspan="2">{{p.pet.birthday | moment}}</td>
             <th colspan="2">性別</th>
             <td colspan="2" style="border-right:none;">♂<input type="checkbox"></td>
             <td colspan="2" style="border-left:none;">♀<input type="checkbox"></td>
@@ -111,9 +111,9 @@
 
           <tr>
             <th colspan="2">一番最近の<br>ワクチン接種日</th>
-            <td colspan="2">{{p.p.vaccine_day | moment}}</td>
+            <td colspan="2">{{p.pet.vaccine_day | moment}}</td>
             <th colspan="2">かかりつけの<br>病院名</th>
-            <td colspan="4">{{p.p.hospital_name}}</td>
+            <td colspan="4">{{p.pet.hospital_name}}</td>
           </tr>
         </tbody>
       </table>
@@ -180,7 +180,7 @@
           <tr>
             <td colspan="3" style="border:none;"><input type="checkbox">チラシ告知</td>
             <td colspan="3" style="border:none;"><input type="checkbox">ご紹介</td>
-            <td colspan="4" style="border:none;">{{p.p.pet_name}}様</td>
+            <td colspan="4" style="border:none;">{{p.pet.pet_name}}様</td>
           </tr>
 
           <tr>
@@ -220,9 +220,8 @@ export default {
     moment: function (data) {
       return moment(data).format('YYYY/MM/DD')
     }
-    }
-
   }
+}
 
 </script>
 

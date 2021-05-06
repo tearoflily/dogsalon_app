@@ -1,16 +1,16 @@
-json.p do
+json.pet do
   json.extract! @pet, :id, :pet_name, :breed, :birthday, :gender, :pet_comment, :vaccine_day, :hospital_name, :dermatitis, :dermatitis_comment, :disease, :disease_comment, :flea, :flea_comment
 end
 
-json.c do
+json.customer do
   json.extract! @pet.customer, :last_name, :first_name, :furigana_last_name, :furigana_first_name, :postcode, :address, :homephone, :mobilephone
 end
 
-json.ps do
+json.pets do
   json.array! @pets, :pet_name, :breed, :birthday
 end
 
-json.ms do
+json.menus do
   json.array! @bookings do |booking|
     json.menu_name booking.menu.pluck(:menu_name)
     json.price booking.menu.pluck(:price)
