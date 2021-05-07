@@ -14,7 +14,7 @@
       <div><pre>●開始時間：{{ params.start_date_time }}●</pre></div>
       <div><pre>●終了時間：{{ params.end_date_time }}●</pre></div>
       <div><pre>●ペットID：{{ params.pet_id }}●</pre></div>
-      <div><pre>●ペット犬種：{{ params.breed }}●</pre></div>
+      <div><pre>●ペット犬種：{{ breed }}●</pre></div>
       <div><pre>●メニューID：{{ params.menu_id }}●</pre></div>
       <div><pre>●今回の予約に関するコメント：{{ params.booking_shop_comment }}</pre></div>
     </div>
@@ -55,17 +55,24 @@
       <div class="col-md-8 offset-md-2" v-if="page==3">
         
         <h1>メニュー選択画面(複数選択可にする！)</h1>
+        {{ menu_id }}
         <div class="form-group">
+
 
         <table class="table table-bordered col-10 booking_index" outlined v-for="menu in menus" :key="menu.id">
           <tr>
             <td>{{ menu.menu_name }} [{{ menu.breed }}]　</td>
-            <td rowspan="2"><v-btn type="primary" @click="menu_select(menu.id)">選択</v-btn></td>
+            <td rowspan="2">
+              <input type="checkbox" v-model="params.menu_id" v-bind:value="menu.id">チェエクボックス{{ menu.id }}
+            </td>
           </tr>
           <tr>
             <td>金額：{{ menu.price }}　メニューの作業時間目安：{{ menu.working_hours }}</td>
           </tr>
         </table>
+
+
+
 
         <h1>特記事項</h1>
         <div>
@@ -84,8 +91,14 @@
 
 
         </div>
+
+         <v-btn type="primary" @click="menu_select_done()">次へ</v-btn>
         </div>
       </div>
+
+
+             
+
 
       <div class="col-md-8 offset-md-2" v-if="page==4">
         
@@ -96,11 +109,11 @@
               <div><pre>開始時間：{{ params.start_date_time }}</pre></div>
               <div><pre>終了時間：{{ params.end_date_time }}</pre></div>
               <div><pre>ペットID：{{ params.pet_id }}</pre></div>
-              <div><pre>ペット犬種：{{ params.breed }}</pre></div>
+              <div><pre>ペット犬種：{{ breed }}</pre></div>
               <div><pre>メニューID：{{ params.menu_id }}</pre></div>
               <div><pre>今回の予約に関するコメント：{{ params.booking_shop_comment }}</pre></div>
             </div>
-
+            <v-btn type="primary" @click="create_bookings()">送信</v-btn>
 
       
         
@@ -133,14 +146,12 @@ export default {
       return {
         page: 1,
         params: {
-          start_end_time: '',
-          start_date_time: '',
-          end_date_time: '',
-          customer_id: '',
-          pet_id: '',
-          menu_id: '',
-          breed: '',
-          booking_shop_comment: '',
+        start_date_time: '',
+        end_date_time: '',
+        customer_id: '',
+        pet_id: '',
+        menu_id: [],
+        booking_shop_comment: '',
         },
         query: {
         last_name_eq: null,
@@ -148,6 +159,8 @@ export default {
         },
         pets: [],
         menus: [],
+        start_end_time: '',
+        breed: '',
       }
     },
    
@@ -178,13 +191,25 @@ export default {
       },
       pet_select(pet_id, breed) {
         this.params.pet_id = pet_id;
-        this.params.breed = breed;
+        this.breed = breed;
         this.menu_all(breed);
         this.next();
       },
-      menu_select(menu_id) {
-        this.params.menu_id = menu_id;
+      menu_select_done() {
         this.next();
+      },
+      create_bookings() {
+      axios.post('/api/v1/bookings', {
+        params: this.params
+        
+      })
+      .then(response => {
+        alert("登録が完了しました");
+        this.$router.push({path:'/employees/bookings/'});
+        })
+      .catch((error) => {
+        console.log(error);
+      })
       },
       menu_all: function(breed){
         axios.get('/api/v1/bookings/menus', {

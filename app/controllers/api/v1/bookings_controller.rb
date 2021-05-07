@@ -28,7 +28,37 @@ class Api::V1::BookingsController < ApplicationController
   end
 
   def create
-    
+    booking = Booking.new(create_bookings)
+    booking.menu_id = create_bookings[:menu_id]
+    booking_menu = BookingMenu.new
+ 
+    last_booking = Booking.where(pet_id: booking.pet_id).order(start_date_time: :desc).limit(1)
+    booking.customer_id = last_booking.first.customer_id
+    booking.start_last_booking = last_booking.first.start_date_time
+    booking.end_last_booking = last_booking.first.end_date_time
+    debugger
+ 
+    if booking.save
+      booking_menu.booking_id = booking.id
+      booking_menu.menu_id = booking.menu_id
+      booking_menu.save
+      render json: { status: 'SUCCESS' }
+    else
+      render json: { status: 'ERROR' }
+    end
+
+    # booking.start_last_booking
+
+
+    # Booking.create!(
+    #   { start_date_time:, end_date_time:, start_last_booking: start_last_booking, end_last_booking: end_last_booking, booking_shop_comment: booking_shop_comment, customer_id: customer_id, pet_id: pet_id, menu_id: menu_id}
+    # )start_last_booking: , end_last_booking:
+
+    # (:start_date_time, :end_date_time, :customer_id, :pet_id, :menu_id, :breed, :booking_shop_comment)
+
+    # BookingMenu.create!(
+    #   { booking_id: booking_id, menu_id: menu_id}
+
   end
 
 
@@ -63,5 +93,9 @@ class Api::V1::BookingsController < ApplicationController
 
     def search_params
       params.require(:q).permit(:last_name_eq, :mobilephone_eq)
+    end
+
+    def create_bookings
+      params.require(:params).permit(:start_date_time, :end_date_time, :customer_id, :pet_id, :booking_shop_comment, menu_id: [])
     end
 end
