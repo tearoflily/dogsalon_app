@@ -1,10 +1,13 @@
 <template>
-    <table>
+<v-app>
+
+   <table>
       <tbody>
         <tr>
           ★
           <td>{{ booking.start_date_time }}</td>
           <td>{{ booking.end_date_time }}</td>
+          
           <td>{{ booking.booking_shop_comment }}</td>
           <td>{{ booking.customer_id }}</td>
           <td>{{ booking.pet_id }}</td>
@@ -12,6 +15,14 @@
         </tr>
       </tbody>
     </table>
+
+  
+ 
+
+
+</v-app>
+
+ 
 </template>
 
 <script>
