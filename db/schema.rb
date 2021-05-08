@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_24_153537) do
+ActiveRecord::Schema.define(version: 2021_05_07_230959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,13 +30,11 @@ ActiveRecord::Schema.define(version: 2021_04_24_153537) do
     t.text "booking_shop_comment"
     t.bigint "customer_id", null: false
     t.bigint "pet_id", null: false
-    t.bigint "menu_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "start_last_booking"
     t.datetime "end_last_booking"
     t.index ["customer_id"], name: "index_bookings_on_customer_id"
-    t.index ["menu_id"], name: "index_bookings_on_menu_id"
     t.index ["pet_id"], name: "index_bookings_on_pet_id"
   end
 
@@ -96,7 +94,6 @@ ActiveRecord::Schema.define(version: 2021_04_24_153537) do
   add_foreign_key "booking_menus", "bookings"
   add_foreign_key "booking_menus", "menus"
   add_foreign_key "bookings", "customers"
-  add_foreign_key "bookings", "menus"
   add_foreign_key "bookings", "pets"
   add_foreign_key "enquetes", "customers"
   add_foreign_key "pets", "customers"

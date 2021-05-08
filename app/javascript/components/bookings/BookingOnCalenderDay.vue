@@ -3,7 +3,7 @@
       <v-dialog v-model="isDisplay" @input="v => v || window_close()" width="600px">
           <v-card>
               <v-card>
-                  <v-card-title>予約日時 </v-card-title>
+                  <v-card-title>予約日時選択</v-card-title>
                   <v-card-actions>
                       <v-row justify="center">
                           <v-col cols="4">
@@ -76,7 +76,6 @@
 <script>
 // import axios from 'axios'
 
-import BookingCalendarVue from "./BookingCalendar.vue"
 import moment from 'moment';
 
 export default({
