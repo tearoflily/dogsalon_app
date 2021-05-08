@@ -76,7 +76,7 @@
 
             <div class="serch-btn">
               <v-col sm="4" md="4">
-                <v-btn v-on:click="removetext()" label="serch_reset">検索リセット</v-btn>
+                <v-btn @click="removetext()" label="serch_reset">検索リセット</v-btn>
               </v-col>
             </div>
           </v-row>
