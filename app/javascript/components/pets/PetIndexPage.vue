@@ -69,15 +69,14 @@
                 :items="items"
                 :menu-props="{ maxHeight: '400' }"
                 label="前回メニュー"
-                multiple
-                hint="メニューを選択してください（複数選択可）"
+                hint="メニューを選択してください"
                 persistent-hint
               ></v-select>
             </v-col>
 
             <div class="serch-btn">
               <v-col sm="4" md="4">
-                <v-btn label="serch_reset">検索リセット</v-btn>
+                <v-btn v-on:click="removetext()" label="serch_reset">検索リセット</v-btn>
               </v-col>
             </div>
           </v-row>
@@ -106,7 +105,12 @@
             <tr>
               <th>前回来店日時</th>
               <td colspan="2">
-                {{ p.bookings.start_last_booking | moment }} 
+                <span v-if="p.bookings.start_last_booking == null">
+                  0000-00-00  00:00
+                </span>
+                <span v-else>
+                {{ p.bookings.start_last_booking | moment }}
+                </span> 
               </td>
               <th>前回メニュー</th>
               <td colspan="2">
@@ -129,7 +133,7 @@ export default {
   data() {
     return {
       pets: [],
-      items: ['シャンプーセット', 'シャンプーカット', '爪切り'],
+      items: ['','シャンプーセット', 'シャンプーカット', '爪切り'],
       date: '',
       menu: false,
       modal: false,
@@ -149,20 +153,63 @@ export default {
 
   filters: {
     moment: function (data) {
-      return moment(data).format('YYYY/MM/DD HH:MM')
+      return moment(data).format('YYYY-MM-DD HH:MM')
     }
   },
   computed: {
     search_pets(){
-        
+        if (this.search_last_visit === '') {
         　return this.pets.filter(p => {
-            return p.pet_name.includes(this.search_pet_name)
-            && p.last_name.includes(this.search_customer_name)
-            
-
-    　})
-　 }
+           if (this.search_menu_name === '') {
+              return p.pet_name.includes(this.search_pet_name)
+              && p.last_name.includes(this.search_customer_name)
+           } else {
+             if (p.bookings.menu_name.length === 1) {
+              return p.pet_name.includes(this.search_pet_name)
+              && p.last_name.includes(this.search_customer_name)
+              && p.bookings.menu_name[0]?.includes(this.search_menu_name)
+             } else {
+              return p.pet_name.includes(this.search_pet_name)
+              && p.last_name.includes(this.search_customer_name)
+              && (p.bookings.menu_name[0]?.includes(this.search_menu_name)
+              || p.bookings.menu_name[1]?.includes(this.search_menu_name))
+             }
+           }
+    　    })    
+        } else {
+            return this.pets.filter(p => {
+              if (this.search_menu_name === '') {
+                return p.pet_name.includes(this.search_pet_name)
+                && p.last_name.includes(this.search_customer_name)
+                && p.bookings.start_last_booking?.includes(this.search_last_visit)
+              } else {
+                 if (p.bookings.menu_name.length === 1) {
+                   return p.pet_name.includes(this.search_pet_name)
+                   && p.last_name.includes(this.search_customer_name)
+                   && p.bookings.start_last_booking?.includes(this.search_last_visit)
+                   && p.bookings.menu_name[0]?.includes(this.search_menu_name)
+                 } else {
+                   return p.pet_name.includes(this.search_pet_name)
+                   && p.last_name.includes(this.search_customer_name)
+                   && p.bookings.start_last_booking?.includes(this.search_last_visit)
+                   && (p.bookings.menu_name[0]?.includes(this.search_menu_name)
+                   || p.bookings.menu_name[1]?.includes(this.search_menu_name))
+                }
+              }
+            })
+        }
+　    }
   },
+
+  methods: {
+    removetext: function() {
+      this.search_pet_name = '';
+      this.search_customer_name = '';
+      this.search_last_visit = '';
+      this.search_menu_name = '';
+      console.log('削除')
+    }
+  }
 }
 
 </script>
