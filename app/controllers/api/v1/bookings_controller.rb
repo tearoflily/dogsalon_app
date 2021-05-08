@@ -24,24 +24,26 @@ class Api::V1::BookingsController < ApplicationController
     pet_data = Pet.where(customer_id: customer)
     @pets = pet_data.includes(:customer)
     @pet_count = @pets.count.to_i
+ 
     render :formats => :json and return
   end
 
   def create
-    booking = Booking.new(create_bookings)
-    booking.menu_id = create_bookings[:menu_id]
-    booking_menu = BookingMenu.new
  
+    booking = Booking.new(create_bookings)
+    menu_array = create_bookings[:menu_id]
     last_booking = Booking.where(pet_id: booking.pet_id).order(start_date_time: :desc).limit(1)
     booking.customer_id = last_booking.first.customer_id
     booking.start_last_booking = last_booking.first.start_date_time
     booking.end_last_booking = last_booking.first.end_date_time
-    debugger
  
     if booking.save
-      booking_menu.booking_id = booking.id
-      booking_menu.menu_id = booking.menu_id
-      booking_menu.save
+      menu_array.each do |menu|
+        booking_menu = BookingMenu.new
+        booking_menu.booking_id = booking.id
+        booking_menu.menu_id = menu
+        booking_menu.save
+      end
       render json: { status: 'SUCCESS' }
     else
       render json: { status: 'ERROR' }

@@ -17,6 +17,7 @@
       <div><pre>●ペット犬種：{{ breed }}●</pre></div>
       <div><pre>●メニューID：{{ params.menu_id }}●</pre></div>
       <div><pre>●今回の予約に関するコメント：{{ params.booking_shop_comment }}</pre></div>
+    {{ pets }}
     </div>
 
       <div class="col-md-10 offset-md-1" v-if="page==1">
@@ -35,20 +36,33 @@
           <v-text-field label="名前(姓)" v-model="query.last_name_eq" placeholder="名前(姓)"></v-text-field>
           <v-text-field label="携帯電話" v-model="query.mobilephone_eq" placeholder="携帯電話"></v-text-field>
           </v-form>
-      <v-btn type="primary" @click="search">search</v-btn>
-
-      <table class="table table-bordered col-10 booking_index" outlined v-for="pet in pets" :key="pet.pet_id">
-        <tr>
-          <td>{{ pet.name }} [{{ pet.pet_breed }}]</td>
-          <td rowspan="2"><v-btn type="primary" @click="pet_select(pet.pet_id, pet.pet_breed)">選択</v-btn></td>
-        </tr>
-        <tr>
-          <td>{{ pet.pet_comment }}</td>
-        </tr>
-      </table>
-
-
         </div>
+      <v-btn type="primary" @click="search">search</v-btn>
+      <div v-if="pets.length >= 1">
+        <table class="table table-bordered col-10 booking_index" outlined v-for="pet in pets" :key="pet.pet_id">
+          <tr>
+            <td>{{ pet.name }} [{{ pet.pet_breed }}]</td>
+            <td rowspan="2"><v-btn type="primary" @click="pet_select(pet.pet_id, pet.pet_breed)">選択</v-btn></td>
+          </tr>
+          <tr>
+            <td>{{ pet.pet_comment }}</td>
+          </tr>
+        </table>
+      </div>
+      <div v-else-if="pets.length === 1">
+        <table class="table table-bordered col-10 booking_index" outlined>
+          <tr>
+            <td>{{ pets.first.name }} [{{ pets.first.pet_breed }}]</td>
+            <td rowspan="2"><v-btn type="primary" @click="pet_select(pets.first.pet_id, pets.first.pet_breed)">選択</v-btn></td>
+          </tr>
+          <tr>
+            <td>{{ pets.first.pet_comment }}</td>
+          </tr>
+        </table>
+      </div>
+      <div v-else>
+
+      </div>
  
       </div>
 
