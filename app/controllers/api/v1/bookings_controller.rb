@@ -69,12 +69,12 @@ class Api::V1::BookingsController < ApplicationController
   end
 
   def edit
-    booking = Booking.find(params[:id])
-    @booking = booking.includes(:customer, :pet, :menu)
-    render json: @booking
+    @booking = Booking.includes(:customer, :pet, :menu).find_by_id(params[:id])
+    render :formats => :json and return
   end
 
   def update
+    debugger
     
   end
 
