@@ -4,7 +4,7 @@
    <table>
       <tbody>
         <tr>
-          ★
+          ★{{ booking }}
           <td>{{ booking.start_date_time }}</td>
           <td>{{ booking.end_date_time }}</td>
           

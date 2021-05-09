@@ -1,5 +1,5 @@
 class Api::V1::BookingsController < ApplicationController
-  before_action :set_booking, only: [:show]
+  before_action :set_booking, only: [:show, :destroy]
   def index
     # 1.ペット情報でも検索できるようにする。フォームに追加する。
     # 2.検索フォーム日付欄、犬種欄
@@ -66,6 +66,20 @@ class Api::V1::BookingsController < ApplicationController
 
   def show
     render json: @booking
+  end
+
+  def edit
+    booking = Booking.find(params[:id])
+    @booking = booking.includes(:customer, :pet, :menu)
+    render json: @booking
+  end
+
+  def update
+    
+  end
+
+  def destroy
+    @booking.destroy!
   end
 
   def oneday
