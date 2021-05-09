@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   namespace :api, format: 'json' do
     namespace :v1 do
       get 'bookings/month', to: 'bookings#month'
+      get 'bookings/menus', to: 'bookings#menus'
       get 'auth/create'
       get 'bookings/oneday', to: 'bookings#oneday'
       resources :bookings, only: [:index, :show, :new, :create]
@@ -20,10 +21,7 @@ Rails.application.routes.draw do
   get '/employees/bookings/:id', to: 'home#index'
   get '/employees/bookings/new/', to: 'home#index'
 
+  get '/employees/charts/', to: 'home#index'
+  get '/employees/charts/:id', to: 'home#index'
 
-  # namespace :api, format: 'json' do
-  #   namespace :v1 do
-  #     resources :memos, only: [:index, :create]
-  #   end
-  # end
 end

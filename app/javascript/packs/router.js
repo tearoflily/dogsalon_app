@@ -25,9 +25,9 @@ export default new VueRouter({
       name: 'BookingNew',
       component: BookingNew },
 
-    { path: '/api/v1/pets/',
+    { path: '/employees/charts/',
       component: PetIndexPage },
-    { path: '/api/v1/pets/:id(\\d+)',
+    { path: '/employees/charts/:id(\\d+)',
       name: 'PetDetailPage',
       component: PetDetailPage },
   ]
