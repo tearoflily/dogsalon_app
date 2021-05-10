@@ -7,13 +7,15 @@
           <col class="col-width">
         </colgroup>
 
-        <tbody style="border:none;">
-          <tr style="border:none;">
+        <tbody>
+          <tr>
             <td v-for="n of 9" :key="n" colspan="1" style="border:none;"></td>
           </tr>
-        </tbody>
 
-        <tbody>
+          <tr>
+            <td colspan="4" class="table-label" style="border:none;">顧客情報</td>
+          </tr>
+
           <tr>
             <th colspan="2">ふりがな</th>
             <td colspan="8" >{{ p.customer.furigana_last_name }} {{ p.customer.furigana_first_name }}様</td>
@@ -69,7 +71,7 @@
         </tbody>
 
         <tbody>
-          <tr style="border:none;">
+          <tr>
             <td colspan="4" class="table-label" style="border:none;">ペット一覧</td>
           </tr>
 
@@ -81,13 +83,61 @@
 
           <tr v-for="pets in p.pets" :key="pets.id">
             <td colspan="3">{{pets.pet_name}}</td>
-            <td colspan="4">{{pets.birthday | moment}}</td>
+            <td colspan="4">{{pets.birthday | birthday}}歳</td>
             <td colspan="3">{{pets.breed}}</td>
           </tr>
         </tbody>
+      </table>
+
+      <div class="pet-images col-8">
+        <div class="pet-image">
+          
+          <div class="big-image">
+            <img :src="imageSrc">
+          </div>
+
+          <div class ="small-images">
+
+            <div class="small-image">
+              <img :src="imageSrc1" @click="imgChange(1)">
+            </div>
+
+            <div class="small-image">
+              <img :src="imageSrc2" @click="imgChange(2)">
+            </div>
+
+            <div class="small-image">
+              <img :src="imageSrc3" @click="imgChange(3)">
+            </div>
+
+            <div class="small-image">
+              <img :src="imageSrc4" @click="imgChange(4)">
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="pet-image-memo">
+          <p>写真の手書きメモ</p>
+          <textarea class="memo-form"></textarea>
+        </div>
+
+      </div>
+
+
+      <table class="table table-bordered col-8 pet-detail" style="border-left:none; border-top:none;">
+
+        <colgroup v-for="n of 10" :key="n">
+          <col class="col-width">
+        </colgroup>
 
         <tbody>
-          <tr style="border:none;">
+          <tr>
+            <td v-for="n of 9" :key="n" colspan="1" style="border:none;"></td>
+          </tr>
+
+          <tr>
             <td colspan="4" class="table-label" style="border:none;">ペット情報</td>
           </tr>
 
@@ -127,7 +177,7 @@
             <input type="checkbox"><span>なし</span>
             <input type="checkbox"><span>あり</span>
           </div>
-          <input type="text-area" class="item-form">
+          <textarea class="item-form"></textarea>
         </div>
 
         <div class="pet-detail-item">
@@ -138,7 +188,7 @@
             <input type="checkbox"><span>なし</span>
             <input type="checkbox"><span>あり</span>
           </div>
-          <input type="text-area" class="item-form">
+          <textarea class="item-form"></textarea>
         </div>
 
         <div class="pet-detail-item">
@@ -149,7 +199,7 @@
             <input type="checkbox"><span>なし</span>
             <input type="checkbox"><span>あり</span>
           </div>
-            <input type="text-area" class="item-form">
+            <textarea class="item-form"></textarea>
         </div>
       </div>
 
@@ -159,13 +209,11 @@
           <col class="col-width">
         </colgroup>
 
-        <tbody style="border:none;">
-          <tr style="border:none;">
+        <tbody>
+          <tr>
             <td v-for="n of 9" :key="n" colspan="1" style="border:none;"></td>
           </tr>
-        </tbody>
 
-        <tbody>
           <tr>
             <th colspan="1" rowspan="5" >ア<br>ン<br>ケ<br>|<br>ト</th>
             <td colspan="9" style="border-bottom:none;">ペットサロンCOROTIAをどこで知りましたか？</td>
@@ -207,6 +255,24 @@ export default {
   data() {
     return {
       p: [],
+      imageSrc: '/assets/test.jpg',
+      imageSrc1: '/assets/test.jpg',
+      imageSrc2: '/assets/test2.jpg',
+      imageSrc3: '/assets/test3.jpg',
+      imageSrc4: '/assets/test4.jpg'
+    }
+  },
+  methods: {
+    imgChange(num){
+      if (num == 1){
+        this.imageSrc = this.imageSrc1
+      }else if (num == 2){
+        this.imageSrc = this.imageSrc2
+      }else if (num == 3){
+        this.imageSrc = this.imageSrc3
+      }else if(num == 4){
+        this.imageSrc = this.imageSrc4
+      }
     }
   },
 
@@ -219,8 +285,24 @@ export default {
   filters: {
     moment: function (data) {
       return moment(data).format('YYYY/MM/DD')
+    },
+    birthday: function (data) {
+      const birthday = {
+        year: moment(data).format('YYYY'),
+        month: moment(data).format('MM'),
+        day: moment(data).format('DD')
+      };
+      var today = new Date()
+      var thisYearBirthday = new Date(today.getFullYear(), birthday.month -1, birthday.day);
+      var age = today.getFullYear() - birthday.year;
+      if (today < thisYearBirthday){
+        return age - 1
+      }else{
+        return age 
+      }
     }
   }
+
 }
 
 </script>
@@ -249,5 +331,55 @@ export default {
   width:100%;
   border:1px solid black;
   border-radius: 5px;
+}
+.pet-images{
+  display:flex;
+}
+.pet-image {
+  width:60%;
+}
+.small-images{
+  width:100%;
+  display:flex;
+  justify-content: space-around;
+}
+.small-image{
+  width:20%;
+}
+.small-image img{
+  width:100%;
+}
+.pet-image-memo{
+  width:40%;
+}
+.memo-form{
+  width:100%;
+  height:300px;
+  background-color: rgb(221, 236, 241);
+  border:1px solid black;
+}
+.big-image{
+  max-width:80%;
+  width:100%;
+  height:auto;
+  position:relative;
+  border: 5px solid lightgray;
+  border-radius:25px;
+  background-color:white;
+}
+.big-image:before{
+  content:"";
+  display:block;
+  padding-top:100%;
+}
+.big-image img{
+  width:100%;
+  height:100%;
+  object-fit: contain;
+  border-radius:20px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
 }
 </style>
