@@ -7,7 +7,7 @@
             <col style="width:10%;">
           </colgroup>
 
-          <v-row cols="9">
+          <v-row cols="8">
             <v-col sm="4" md="5">
               <v-text-field label="顧客名" v-model="search_customer_name" ></v-text-field>
             </v-col>
@@ -83,7 +83,7 @@
         </v-container>
       </v-form>
 
-      <table class="table table-bordered col-9 pets_index" v-for="p in search_pets" :key="p.id">
+      <table class="table table-bordered col-8 pets_index" v-for="p in search_pets" :key="p.id">
           <colgroup v-for="n of 9" :key="n">
             <col style="width:10%;">
           </colgroup>
