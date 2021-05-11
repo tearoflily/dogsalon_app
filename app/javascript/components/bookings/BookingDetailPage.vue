@@ -127,6 +127,7 @@ export default {
       booking: {},
       menu_start: false,
       menu_end: false,
+      booking_update: {},
       aa: '',
       bb: '',
       cc: '',
@@ -153,36 +154,57 @@ export default {
     }
   },
   methods: {
-
-
     submit: function(id){
-      const end_day_str = dayjs(this.booking.end_day).format('YYYY-MM-DD');
-      const end_yy = end_day_str.slice(0, 4);
-      const end_mo = end_day_str.slice(5, 7);
-      const end_da = end_day_str.slice(8, 10);
+      const start_yy = dayjs(this.booking.start_day).format('YYYY').toString();
+      const start_mo = dayjs(this.booking.start_day).format('MM').toString();
+      const start_da = dayjs(this.booking.start_day).format('DD').toString();
+      const start_time_str = this.booking.start_time.toString();
+      const start_ho = start_time_str.slice(0, 2);
+      const start_min = start_time_str.slice(3, 5);
+      const start_join = dayjs({
+        year: start_yy,
+        month: start_mo,
+        day: start_da,
+        hour: start_ho,
+        minute: start_min,
+      });
+      const start_joined = start_join.subtract(1, 'month').format();
+      const start_joined_to_date = dayjs(start_joined).format();
+
+      const end_yy = dayjs(this.booking.end_day).format('YYYY').toString();
+      const end_mo = dayjs(this.booking.end_day).format('MM').toString();
+      const end_da = dayjs(this.booking.end_day).format('DD').toString();
       const end_time_str = this.booking.end_time.toString();
       const end_ho = end_time_str.slice(0, 2);
       const end_min = end_time_str.slice(3, 5);
-    
-      this.aa = dayjs({
+      const end_join = dayjs({
         year: end_yy,
         month: end_mo,
         day: end_da,
         hour: end_ho,
-        minute: end_min
+        minute: end_min,
       });
-      // タイムゾーンが必要かも　↑は消さない
+      const end_joined = end_join.subtract(1, 'month').format();
+      const end_joined_to_date = dayjs(end_joined).format();
+      // タイムゾーンが必要かも　end_joined_to_date。↑は消さない dayjs().locale('ja').format() 
 
-   
-      
+
+      this.booking.start_date_time = start_joined_to_date;
+      this.booking.end_date_time = end_joined_to_date;
+
+      this.booking_update.start_date_time = start_joined_to_date;
+      this.booking_update.end_date_time = end_joined_to_date;
+      this.booking_update.booking_shop_comment = this.booking_shop_comment;
+
       axios
-      .patch(`/api/v1/bookings/${id}/edit`, {
-        params: {
-          q: this.query
-        }
-        }
-        )
-
+      .patch(`/api/v1/bookings/${id}/`, {
+        params: this.booking_update
+        
+      })
+      .then(response => {
+        alert("編集を保存しました");
+        this.$router.push({path:'/employees/bookings/'});
+      })
 
     },
 

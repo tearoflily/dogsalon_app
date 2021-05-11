@@ -29,7 +29,7 @@ class Api::V1::BookingsController < ApplicationController
   end
 
   def create
- 
+  
     booking = Booking.new(create_bookings)
     menu_array = create_bookings[:menu_id]
     last_booking = Booking.where(pet_id: booking.pet_id).order(start_date_time: :desc).limit(1)
@@ -74,7 +74,14 @@ class Api::V1::BookingsController < ApplicationController
   end
 
   def update
-    debugger
+
+    @pet = Booking.find_by(pet_id: params[:id])
+    
+    if @pet.update_attributes(booking_edit)
+      render json: { status: 'SUCCESS' }
+    else
+      render json: { status: 'ERROR' }
+    end
     
   end
 
@@ -113,5 +120,9 @@ class Api::V1::BookingsController < ApplicationController
 
     def create_bookings
       params.require(:params).permit(:start_date_time, :end_date_time, :customer_id, :pet_id, :booking_shop_comment, menu_id: [])
+    end
+
+    def booking_edit
+      params.require(:params).permit(:start_date_time, :end_date_time, :booking_shop_comment)
     end
 end
