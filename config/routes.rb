@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       get 'bookings/menus', to: 'bookings#menus'
       get 'auth/create'
       get 'bookings/oneday', to: 'bookings#oneday'
-      resources :bookings, only: [:index, :show, :new, :create]
+      resources :bookings, only: [:index, :show, :new, :create, :edit, :update, :destroy]
 
     end
   end
