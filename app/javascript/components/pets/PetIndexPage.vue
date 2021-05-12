@@ -114,7 +114,9 @@
               </td>
               <th>前回メニュー</th>
               <td colspan="2">
-                    XXXXXXXXXXXXXXß
+                <span v-for="m_n in p.bookings.menu_name" :key="m_n.id">
+                  {{ m_n }}<br>
+                </span>
               </td>
             </tr>
         </tbody>
@@ -126,7 +128,6 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-
 export default {
   data() {
     return {
@@ -142,13 +143,11 @@ export default {
       search_menu_name: '',
     }
   },
-
   mounted() {
     axios
       .get('/api/v1/pets.json')
       .then(response => (this.pets = response.data))
   },
-
   filters: {
     moment: function (data) {
       return moment(data).format('YYYY-MM-DD HH:MM')
@@ -156,25 +155,25 @@ export default {
   },
   computed: {
     search_pets(){
-      if (this.search_last_visit === '') {
-        return this.pets.filter(p => {
-          if (this.search_menu_name === '') {
-            return p.pet_name.includes(this.search_pet_name)
-            && p.last_name.includes(this.search_customer_name)
-          } else {
-          if (p.bookings.menu_name.length === 1) {
-            return p.pet_name.includes(this.search_pet_name)
-            && p.last_name.includes(this.search_customer_name)
-            && p.bookings.menu_name[0]?.includes(this.search_menu_name)
-          } else {
-            return p.pet_name.includes(this.search_pet_name)
-            && p.last_name.includes(this.search_customer_name)
-            && (p.bookings.menu_name[0]?.includes(this.search_menu_name)
-            || p.bookings.menu_name[1]?.includes(this.search_menu_name))
-          }
-          }
-        })    
-      } else {
+        if (this.search_last_visit === '') {
+        　return this.pets.filter(p => {
+           if (this.search_menu_name === '') {
+              return p.pet_name.includes(this.search_pet_name)
+              && p.last_name.includes(this.search_customer_name)
+           } else {
+             if (p.bookings.menu_name.length === 1) {
+              return p.pet_name.includes(this.search_pet_name)
+              && p.last_name.includes(this.search_customer_name)
+              && p.bookings.menu_name[0]?.includes(this.search_menu_name)
+             } else {
+              return p.pet_name.includes(this.search_pet_name)
+              && p.last_name.includes(this.search_customer_name)
+              && (p.bookings.menu_name[0]?.includes(this.search_menu_name)
+              || p.bookings.menu_name[1]?.includes(this.search_menu_name))
+             }
+           }
+    　    })    
+        } else {
             return this.pets.filter(p => {
               if (this.search_menu_name === '') {
                 return p.pet_name.includes(this.search_pet_name)
@@ -196,9 +195,8 @@ export default {
               }
             })
         }
-    }
+　    }
   },
-
   methods: {
     removetext: function() {
       this.search_pet_name = '';
@@ -209,25 +207,20 @@ export default {
     }
   }
 }
-
 </script>
-
 <style scoped>
 p {
   font-size: 2em;
   text-align: center;
 }
-
 .pets_index {
   margin-top: 50px;
 }
-
 .pets_index th {
   background-color: #f5f5f5;
   vertical-align: middle;
   text-align: center;
 }
-
 .pets_index td {
   vertical-align: middle;
   text-align: center;
