@@ -28,9 +28,79 @@
               v-bind="attrs"
               v-on="on"
             >
-              New Item
+              新規メニュー追加
             </v-btn>
           </template>
+
+           <v-card>
+            
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="5"
+                  >
+                    <v-text-field
+                      v-model="params.menu_name"
+                      label="メニュー名"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="5"
+                  >
+                    <v-text-field
+                      v-model="params.breed"
+                      label="犬種"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="5"
+                  >
+                    <v-text-field
+                      v-model ="params.price"
+                      label="値段(円)"
+                      type = "number"
+                      min ="1"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="5"
+                  >
+                    <v-text-field
+                      v-model="params.working_hours"
+                      label="所用時間"
+                      type ="time"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="close"
+              >
+                Cancel
+              </v-btn>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="close"
+              >
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
            </v-dialog>
       
       <v-data-table
@@ -77,6 +147,7 @@ import moment from 'moment';
 export default {
   data() {
     return {
+      dialog: false,
       menus: [],
       headers: [
           {
@@ -91,6 +162,12 @@ export default {
           { text: '　編集 / 削除', value: "actions"}
         ],
         search: '',
+        params: {
+          menu_name: '',
+          breed: '',
+          price: '',
+          working_hours: '',
+        }
     }
   },
 
@@ -103,6 +180,16 @@ export default {
     moment: function (data) {
        return moment(data).format('HH:mm')
     }
+  },
+  watch: {
+      dialog (val) {
+        val || this.close()
+      },
+    },
+  methods: {
+    close () {
+        this.dialog = false
+      },
   },
 }
 
