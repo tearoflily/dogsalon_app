@@ -7,8 +7,6 @@ import BookingNew from '../components/bookings/BookingNew.vue';
 import PetIndexPage from '../components/pets/PetIndexPage.vue';
 import PetDetailPage from '../components/pets/PetDetailPage.vue';
 
-import MenuIndexPage from '../components/menus/MenuIndexPage.vue';
-
 
 Vue.use(VueRouter)
 
@@ -27,14 +25,13 @@ export default new VueRouter({
       name: 'BookingNew',
       component: BookingNew },
 
-    { path: '/employees/charts/',
+    { path: '/api/v1/pets/',
       component: PetIndexPage },
-    { path: '/employees/charts/:id(\\d+)',
+    { path: '/api/v1/pets/:id(\\d+)',
       name: 'PetDetailPage',
       component: PetDetailPage },
-
-      { path: '/api/v1/menus/',
-      component: MenuIndexPage },
-
   ]
 })
+
+
+
