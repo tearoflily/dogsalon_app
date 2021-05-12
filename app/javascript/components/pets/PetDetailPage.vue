@@ -98,20 +98,20 @@
 
           <div class ="small-images">
 
-            <div class="small-image">
-              <img :src="imageSrc1" @click="imgChange(1)">
+            <div class="small-image" @click="imgChange(1)">
+              <img :src="imageSrc1">
             </div>
 
-            <div class="small-image">
-              <img :src="imageSrc2" @click="imgChange(2)">
+            <div class="small-image" @click="imgChange(2)">
+              <img :src="imageSrc2">
             </div>
 
-            <div class="small-image">
-              <img :src="imageSrc3" @click="imgChange(3)">
+            <div class="small-image" @click="imgChange(3)">
+              <img :src="imageSrc3">
             </div>
 
-            <div class="small-image">
-              <img :src="imageSrc4" @click="imgChange(4)">
+            <div class="small-image" @click="imgChange(4)">
+              <img :src="imageSrc4">
             </div>
 
           </div>
@@ -174,8 +174,8 @@
             ・ノミ・ダニはいますか？ ※もしいた場合、追加料金¥1,000円をいただく場合がございます。
           </label>
           <div class="double-check">
-            <input type="checkbox"><span>なし</span>
-            <input type="checkbox"><span>あり</span>
+            <label><input type="radio" v-model= checkDermatitis value="false">なし</label>
+            <label><input type="radio" v-model= checkDermatitis value="true">あり</label>
           </div>
           <textarea class="item-form"></textarea>
         </div>
@@ -259,7 +259,7 @@ export default {
       imageSrc1: '/assets/test.jpg',
       imageSrc2: '/assets/test2.jpg',
       imageSrc3: '/assets/test3.jpg',
-      imageSrc4: '/assets/test4.jpg'
+      imageSrc4: '/assets/test4.jpg',
     }
   },
   methods: {
@@ -275,7 +275,12 @@ export default {
       }
     }
   },
-
+  computed: {
+    checkDermatitis(){
+      console.log(this.p.pet.dermatitis)
+      return this.p.pet.dermatitis
+    }
+  },
   mounted() {
     axios
       .get(`/api/v1/pets/${this.$route.params.id}.json`)
@@ -284,7 +289,7 @@ export default {
 
   filters: {
     moment: function (data) {
-      return moment(data).format('YYYY/MM/DD')
+      return moment(data).format('YYYY年MM月DD日')
     },
     birthday: function (data) {
       const birthday = {
@@ -344,28 +349,52 @@ export default {
   justify-content: space-around;
 }
 .small-image{
-  width:20%;
+  max-width:22%;
+  width:100%;
+  height:auto;
+  position:relative;
+  border: 2px solid black;
+  border-radius:2px;
+  background-color:white;
+}
+.small-image:before{
+  content:"";
+  display:block;
+  padding-top:100%;
 }
 .small-image img{
   width:100%;
+  height:100%;
+  object-fit: contain;
+  border-radius:2px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
 }
 .pet-image-memo{
-  width:40%;
+  width:50%;
+  height:auto;
+  background-color: rgb(255, 248, 246);
+  border:1px solid black;
+}
+.pet-image-memo p{
+  height:10%
 }
 .memo-form{
   width:100%;
-  height:300px;
-  background-color: rgb(221, 236, 241);
-  border:1px solid black;
+  height:85%;
 }
 .big-image{
   max-width:80%;
   width:100%;
   height:auto;
   position:relative;
-  border: 5px solid lightgray;
-  border-radius:25px;
+  border: 2px solid black;
+  border-radius:2px;
   background-color:white;
+  margin: 0 auto;
+  margin-bottom:30px;
 }
 .big-image:before{
   content:"";
@@ -376,7 +405,7 @@ export default {
   width:100%;
   height:100%;
   object-fit: contain;
-  border-radius:20px;
+  border-radius:2px;
   position:absolute;
   top:50%;
   left:50%;
