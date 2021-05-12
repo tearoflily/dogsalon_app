@@ -3,15 +3,12 @@ class Api::V1::PetsController < ApplicationController
 
   def index
 
-    @pets = Pet.all
-    @bookings = Booking.all
-    render :formats => :json and return
+    pets = Pet.all
+    render json: pets, include: [:customer, :bookings]
   end
 
   def show
-    @pets = Pet.where(customer_id: @pet.customer_id)
-    @bookings = Booking.where(pet_id: params[:id])
-    render :formats => :json and return
+    render json: @pet, include: [:customer, :bookings]
   end
 
   def new

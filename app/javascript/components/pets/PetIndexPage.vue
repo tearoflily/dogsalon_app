@@ -7,13 +7,13 @@
             <col style="width:10%;">
           </colgroup>
 
-          <v-row cols="8">
+          <v-row cols="9">
             <v-col sm="4" md="5">
-              <v-text-field label="顧客名" v-model="search_customer_name" ></v-text-field>
+              <v-text-field label="顧客名" v-model="serch_customer_name" onpaste="return false" autocomplete="off"></v-text-field>
             </v-col>
 
           <v-col sm="4" md="5">
-            <v-text-field label="ペットのお名前" v-model="search_pet_name"></v-text-field>
+            <v-text-field label="ペットのお名前" v-model="serch_pet_name" onpaste="return false" autocomplete="off"></v-text-field>
           </v-col>
         
           <v-col sm="4" md="5">
@@ -29,7 +29,7 @@
 
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                v-model="search_last_visit"
+                v-model="date"
                 label="前回来店日時"
                 prepend-icon="mdi-calendar"
                 readonly
@@ -40,7 +40,7 @@
             </template>
 
               <v-date-picker
-                v-model="search_last_visit"
+                v-model="date"
                 no-title
                 scrollable
               >
@@ -48,7 +48,7 @@
                 <v-btn
                   text
                   color="primary"
-                  @click="search_last_visit = ''"
+                  @click="menu = false"
                 >
                   Cancel
                 </v-btn>
@@ -65,32 +65,33 @@
 
           <v-col sm="4" md="5">
             <v-select
-                v-model="search_menu_name"
+                v-model="e6"
                 :items="items"
                 :menu-props="{ maxHeight: '400' }"
                 label="前回メニュー"
-                hint="メニューを選択してください"
+                multiple
+                hint="メニューを選択してください（複数選択可）"
                 persistent-hint
               ></v-select>
             </v-col>
 
             <div class="serch-btn">
               <v-col sm="4" md="4">
-                <v-btn @click="removetext()" label="serch_reset">検索リセット</v-btn>
+                <v-btn label="serch_reset">検索リセット</v-btn>
               </v-col>
             </div>
           </v-row>
         </v-container>
       </v-form>
 
-      <table class="table table-bordered col-8 pets_index" v-for="p in search_pets" :key="p.id">
+      <table class="table table-bordered col-9 pets_index" v-for="p in search_pets" :key="p.customer.id">
           <colgroup v-for="n of 9" :key="n">
             <col style="width:10%;">
           </colgroup>
         <tbody>
           <tr>
             <th>顧客名</th>
-            <td colspan="2">{{ p.last_name }} {{ p.first_name }} 様</td>
+            <td colspan="2">{{ p.customer.last_name }} {{ p.customer.first_name }} 様</td>
               <th>ペット名</th>
               <td colspan="2">{{ p.pet_name }}
                 <span v-if="p.gender == 'オス'">くん</span>
@@ -105,17 +106,14 @@
             <tr>
               <th>前回来店日時</th>
               <td colspan="2">
-                <span v-if="p.bookings.start_last_booking == null">
-                  0000-00-00  00:00
-                </span>
-                <span v-else>
                 {{ p.bookings.start_last_booking | moment }}
-                </span> 
               </td>
               <th>前回メニュー</th>
               <td colspan="2">
-                <span v-for="m_n in p.bookings.menu_name" :key="m_n.id">
-                  {{ m_n }}<br>
+                <span v-for="(b ,i) in p.bookings" :key="b.id" >
+                  <span v-if="i === 0">
+                    XXXXXXXXXXXXXXß
+                  </span>
                 </span>
               </td>
             </tr>
@@ -133,15 +131,13 @@ export default {
   data() {
     return {
       pets: [],
-      items: ['','シャンプーセット', 'シャンプーカット', '爪切り'],
-      date: '',
+      items: ['シャンプーセット', 'シャンプーカット', '爪切り'],
+      date: null,
       menu: false,
       modal: false,
       menu2: false,
-      search_pet_name: '',
-      search_customer_name: '',
-      search_last_visit: '',
-      search_menu_name: '',
+      serch_pet_name: '',
+      serch_customer_name: '',
     }
   },
 
@@ -153,63 +149,16 @@ export default {
 
   filters: {
     moment: function (data) {
-      return moment(data).format('YYYY-MM-DD HH:MM')
+      return moment(data).format('YYYY/MM/DD HH:MM')
     }
   },
   computed: {
     search_pets(){
-        if (this.search_last_visit === '') {
-        　return this.pets.filter(p => {
-           if (this.search_menu_name === '') {
-              return p.pet_name.includes(this.search_pet_name)
-              && p.last_name.includes(this.search_customer_name)
-           } else {
-             if (p.bookings.menu_name.length === 1) {
-              return p.pet_name.includes(this.search_pet_name)
-              && p.last_name.includes(this.search_customer_name)
-              && p.bookings.menu_name[0]?.includes(this.search_menu_name)
-             } else {
-              return p.pet_name.includes(this.search_pet_name)
-              && p.last_name.includes(this.search_customer_name)
-              && (p.bookings.menu_name[0]?.includes(this.search_menu_name)
-              || p.bookings.menu_name[1]?.includes(this.search_menu_name))
-             }
-           }
-    　    })    
-        } else {
-            return this.pets.filter(p => {
-              if (this.search_menu_name === '') {
-                return p.pet_name.includes(this.search_pet_name)
-                && p.last_name.includes(this.search_customer_name)
-                && p.bookings.start_last_booking?.includes(this.search_last_visit)
-              } else {
-                 if (p.bookings.menu_name.length === 1) {
-                   return p.pet_name.includes(this.search_pet_name)
-                   && p.last_name.includes(this.search_customer_name)
-                   && p.bookings.start_last_booking?.includes(this.search_last_visit)
-                   && p.bookings.menu_name[0]?.includes(this.search_menu_name)
-                 } else {
-                   return p.pet_name.includes(this.search_pet_name)
-                   && p.last_name.includes(this.search_customer_name)
-                   && p.bookings.start_last_booking?.includes(this.search_last_visit)
-                   && (p.bookings.menu_name[0]?.includes(this.search_menu_name)
-                   || p.bookings.menu_name[1]?.includes(this.search_menu_name))
-                }
-              }
-            })
-        }
-　    }
+    　return this.pets.filter(p => {
+        return p.pet_name.includes(this.serch_pet_name) && p.customer.last_name.includes(this.serch_customer_name)
+    　})
+　 }
   },
-
-  methods: {
-    removetext: function() {
-      this.search_pet_name = '';
-      this.search_customer_name = '';
-      this.search_last_visit = '';
-      this.search_menu_name = '';
-      console.log('削除')
-    }
-  }
 }
 
 </script>

@@ -41,4 +41,3 @@ yarn-debug.log*
 
 # vendor/bundleを除外する
 vendor/bundle
-#try

@@ -4,191 +4,84 @@
       <table class="table table-bordered col-8 pet-detail" style="border-left:none; border-top:none;">
 
         <colgroup v-for="n of 10" :key="n">
-          <col class="col-width">
+          <col style="width:10%;">
         </colgroup>
 
-        <tbody style="border:none;">
-          <tr style="border:none;">
-            <td v-for="n of 9" :key="n" colspan="1" style="border:none;"></td>
-          </tr>
-        </tbody>
-
         <tbody>
+          <tr style="border:none;">
+            <td colspan="2" class="table-label" style="border:none;">顧客情報</td>
+            <td v-for="n of 7" :key="n" colspan="1" style="border:none;"></td>
+          </tr>
+
           <tr>
             <th colspan="2">ふりがな</th>
-            <td colspan="8" >{{ p.c.furigana_last_name }} {{ p.c.furigana_first_name }}様</td>
+            <td colspan="8" >{{ p.customer.furigana_last_name }} {{ p.customer.furigana_first_name }}様</td>
           </tr>
 
           <tr>
             <th colspan="2">顧客名</th>
-            <td colspan="8">{{ p.c.last_name }} {{ p.c.first_name }}様</td>
+            <td colspan="8">{{ p.customer.last_name }} {{ p.customer.first_name }}様</td>
           </tr>
 
           <tr>
             <th colspan="2" rowspan="2">住所</th>
-            <td colspan="8" style="border-bottom:none;">{{ p.c.postcode }}</td>
+            <td colspan="8" style="border-bottom:none;">{{ p.customer.postcode }}</td>
           </tr>
 
           <tr>
-            <td colspan="8" style="border-top:none;">{{ p.c.address }}</td>
+            <td colspan="8" style="border-top:none;">{{ p.customer.address }}</td>
           </tr>
 
           <tr>
               <th colspan="2">ご連絡先</th>
-              <td colspan="4" style="border-right:none;">ご自宅 {{ p.c.homephone }}</td>
-              <td colspan="4" style="border-left:none;">携帯電話 {{ p.c.mobilephone }}</td>
+              <td colspan="4" style="border-right:none;">ご自宅 {{ p.customer.homephone }}</td>
+              <td colspan="4" style="border-left:none;">携帯電話 {{ p.customer.mobilephone }}</td>
           </tr>
         </tbody>
 
         <tbody>
           <tr>
-            <td colspan="4" class="table-label" style="border:none;">申し送り備考欄</td>
+            <td colspan="2" class="table-label" style="border:none;">申し送り備考欄</td>
           </tr>
 
           <tr>
-            <td colspan="10" >{{p.p.pet_comment}}</td>
+            <td colspan="10" >{{p.pet_comment}}</td>
           </tr>
         </tbody>
         
         <tbody>
           <tr style="border:none;">
-            <td colspan="4" class="table-label" style="border:none;">過去の予約履歴</td>
+            <td colspan="2" class="table-label" style="border:none;">過去の予約履歴</td>
           </tr>
 
           <tr>
             <th colspan="3">日時</th>
             <th colspan="3">メニュー</th>
-            <th colspan="4">価格</th>
+            <th colspan="3">価格</th>
           </tr>
-          
-          <tr v-for="ms in p.ms" :key="ms.id">
-              <td colspan="3">{{ms.start_last_booking | moment}}</td>
-              <td colspan="3"><span v-for="m_m in ms.menu_name" :key="m_m.id">{{m_m}}<br></span></td>
-              <td  colspan="4"><span v-for="m_p in ms.price" :key="m_p.id">¥{{m_p | price}}円<br></span></td>
+
+          <tr v-for="b in p.bookings" :key="b.id">
+            <td colspan="3">{{b.start_last_booking | moment}}</td>
+            <td colspan="3">{{b.start_last_booking | moment}}</td>
+            <td colspan="3">{{b.start_last_booking | moment}}</td>
           </tr>
         </tbody>
 
         <tbody>
           <tr style="border:none;">
-            <td colspan="4" class="table-label" style="border:none;">ペット一覧</td>
+            <td colspan="1" class="table-label" style="border:none;">ペット一覧</td>
           </tr>
 
           <tr>
             <th colspan="3">ペットのお名前</th>
             <th colspan="3">年齢</th>
-            <th colspan="4">犬種</th>
+            <th colspan="3">犬種</th>
           </tr>
 
-          <tr v-for="ps in p.ps" :key="ps.id">
-            <td colspan="3">{{ps.pet_name}}</td>
-            <td colspan="3">{{ps.birthday | moment}}</td>
-            <td colspan="4">{{ps.breed}}</td>
-          </tr>
-        </tbody>
-
-        <tbody>
-          <tr style="border:none;">
-            <td colspan="4" class="table-label" style="border:none;">ペット情報</td>
-          </tr>
-
-          <tr>
-            <th colspan="2">ペットのお名前</th>
-            <td colspan="8">{{p.p.pet_name}}</td>
-          </tr>
-
-          <tr>
-            <th colspan="2">犬種</th>
-            <td colspan="8">{{p.p.breed}}</td>
-          </tr>
-
-          <tr>
-            <th colspan="2">お誕生日</th>
-            <td colspan="2">{{p.p.birthday | moment}}</td>
-            <th colspan="2">性別</th>
-            <td colspan="2" style="border-right:none;">♂<input type="checkbox"></td>
-            <td colspan="2" style="border-left:none;">♀<input type="checkbox"></td>
-          </tr>
-
-          <tr>
-            <th colspan="2">一番最近の<br>ワクチン接種日</th>
-            <td colspan="2">{{p.p.vaccine_day | moment}}</td>
-            <th colspan="2">かかりつけの<br>病院名</th>
-            <td colspan="4">{{p.p.hospital_name}}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="pet-detail-form col-8">
-        <div  colspan="8" class="pet-detail-item">
-          <label>
-            ・ノミ・ダニはいますか？ ※もしいた場合、追加料金¥1,000円をいただく場合がございます。
-          </label>
-          <div class="double-check">
-            <input type="checkbox"><span>なし</span>
-            <input type="checkbox"><span>あり</span>
-          </div>
-          <input type="text-area" class="item-form">
-        </div>
-
-        <div class="pet-detail-item">
-          <label>
-            ・皮膚炎(かゆみ、湿疹など)はありますか？
-          </label>
-          <div class="double-check">
-            <input type="checkbox"><span>なし</span>
-            <input type="checkbox"><span>あり</span>
-          </div>
-          <input type="text-area" class="item-form">
-        </div>
-
-        <div class="pet-detail-item">
-          <label>
-            ・持病(てんかんなど)はありますか？
-          </label>
-          <div class="double-check">
-            <input type="checkbox"><span>なし</span>
-            <input type="checkbox"><span>あり</span>
-          </div>
-            <input type="text-area" class="item-form">
-        </div>
-      </div>
-
-      <table class="table table-bordered col-8 pet-detail" style="border-left:none; border-top:none;">
-
-        <colgroup v-for="n of 10" :key="n">
-          <col class="col-width">
-        </colgroup>
-
-        <tbody style="border:none;">
-          <tr style="border:none;">
-            <td v-for="n of 9" :key="n" colspan="1" style="border:none;"></td>
-          </tr>
-        </tbody>
-
-        <tbody>
-          <tr>
-            <th colspan="1" rowspan="5" >ア<br>ン<br>ケ<br>|<br>ト</th>
-            <td colspan="9" style="border-bottom:none;">ペットサロンCOROTIAをどこで知りましたか？</td>
-          </tr>
-
-          <tr>
-            <td colspan="3" style="border:none;"><input type="checkbox">インターネット</td>
-            <td colspan="3" style="border:none;"><input type="checkbox">お店の前を通って</td>
-            <td colspan="4" style="border:none;"></td>
-          </tr>
-
-          <tr>
-            <td colspan="3" style="border:none;"><input type="checkbox">チラシ告知</td>
-            <td colspan="3" style="border:none;"><input type="checkbox">ご紹介</td>
-            <td colspan="4" style="border:none;">{{p.p.pet_name}}様</td>
-          </tr>
-
-          <tr>
-            <td colspan="9" style="border-bottom:none;">トリマーに伝えておきたいことがありましたらご記入ください</td>
-          </tr>
-
-          <tr>
-            <td colspan="9" style="border-top:none;"><input type="text-area"></td>
+          <tr v-for="p_pets in p.cusotomer" :key="p_pets.id">
+            <td colspan="3">５</td>
+            <td colspan="3">5</td>
+            <td colspan="3">５</td>
           </tr>
         </tbody>
 
@@ -206,7 +99,7 @@ import moment from 'moment';
 export default {
   data() {
     return {
-      p: [],
+      p: {},
     }
   },
 
@@ -227,9 +120,11 @@ export default {
 </script>
 
 <style scoped>
-.col-width{
-  width:10%;
+
+.pet-detail tbody {
+  width:100%;
 }
+
 .table-label{
   font-weight:bold;
 }
@@ -242,13 +137,5 @@ export default {
 .pet-detail td {
   vertical-align: middle;
   text-align: left;
-}
-.pet-detail-item{
-  width:100%;
-}
-.item-form{
-  width:100%;
-  border:1px solid black;
-  border-radius: 5px;
 }
 </style>
