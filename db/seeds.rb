@@ -45,7 +45,7 @@ end
 Enquete.create!(
     know_shop: rand(0..4),
     know_shop_comment: "アンケート用備考欄のコメントをここに入力",
-    customer_id: rand(0..6)
+    customer_id: 1
 )
 
 #Menuテーブル用データ生成

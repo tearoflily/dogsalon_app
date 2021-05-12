@@ -155,8 +155,8 @@
             <th colspan="2">お誕生日</th>
             <td colspan="2">{{p.pet.birthday | moment}}</td>
             <th colspan="2">性別</th>
-            <td colspan="2" style="border-right:none;">♂<input type="checkbox"></td>
-            <td colspan="2" style="border-left:none;">♀<input type="checkbox"></td>
+            <td colspan="2" style="border-right:none;"><label>♂ <input type="checkbox" v-model="checkGender1" :disabled= true></label></td>
+            <td colspan="2" style="border-left:none;"><label>♀ <input type="checkbox" v-model="checkGender2" :disabled= true></label></td>
           </tr>
 
           <tr>
@@ -173,22 +173,21 @@
           <label>
             ・ノミ・ダニはいますか？ ※もしいた場合、追加料金¥1,000円をいただく場合がございます。
           </label>
-          <div class="double-check">
-            <label><input type="radio" v-model= checkDermatitis value="false">なし</label>
-            <label><input type="radio" v-model= checkDermatitis value="true">あり</label>
+          <div class="double-check"> 
+            <label><input type="checkbox" v-model="checkDermatitis1" :disabled= true> なし</label>
+            <label><input type="checkbox" v-model="checkDermatitis2" :disabled= true> あり</label>
           </div>
-          <textarea class="item-form"></textarea>
+          <textarea class="item-form" v-model="dermatitisComment" :disabled= true></textarea>
         </div>
-
         <div class="pet-detail-item">
           <label>
             ・皮膚炎(かゆみ、湿疹など)はありますか？
           </label>
           <div class="double-check">
-            <input type="checkbox"><span>なし</span>
-            <input type="checkbox"><span>あり</span>
+            <label><input type="checkbox" v-model="checkDisease1" :disabled= true> なし</label>
+            <label><input type="checkbox" v-model="checkDisease2" :disabled= true> あり</label>
           </div>
-          <textarea class="item-form"></textarea>
+          <textarea class="item-form" v-model="diseaseComment" :disabled= true></textarea>
         </div>
 
         <div class="pet-detail-item">
@@ -196,10 +195,10 @@
             ・持病(てんかんなど)はありますか？
           </label>
           <div class="double-check">
-            <input type="checkbox"><span>なし</span>
-            <input type="checkbox"><span>あり</span>
+            <label><input type="checkbox" v-model="checkFlea1" :disabled= true> なし</label>
+            <label><input type="checkbox" v-model="checkFlea2" :disabled= true> あり</label>
           </div>
-            <textarea class="item-form"></textarea>
+            <textarea class="item-form" v-model="fleaComment" :disabled= true></textarea>
         </div>
       </div>
 
@@ -220,15 +219,15 @@
           </tr>
 
           <tr>
-            <td colspan="3" style="border:none;"><input type="checkbox">インターネット</td>
-            <td colspan="3" style="border:none;"><input type="checkbox">お店の前を通って</td>
+            <td colspan="3" style="border:none;"><label><input type="checkbox" v-model="checkEnquete1" :disabled= true> インターネット</label></td>
+            <td colspan="3" style="border:none;"><label><input type="checkbox" v-model="checkEnquete2" :disabled= true> お店の前を通って</label></td>
             <td colspan="4" style="border:none;"></td>
           </tr>
 
           <tr>
-            <td colspan="3" style="border:none;"><input type="checkbox">チラシ告知</td>
-            <td colspan="3" style="border:none;"><input type="checkbox">ご紹介</td>
-            <td colspan="4" style="border:none;">{{p.pet.pet_name}}様</td>
+            <td colspan="3" style="border:none;"><label><input type="checkbox" v-model="checkEnquete3" :disabled= true> チラシ告知</label></td>
+            <td colspan="3" style="border:none;"><label><input type="checkbox" v-model="checkEnquete4" :disabled= true> ご紹介</label></td>
+            <td colspan="4" style="border:none;"><span v-if="checkEnquete4 == true ">{{p.pet.pet_name}}様</span></td>
           </tr>
 
           <tr>
@@ -236,7 +235,7 @@
           </tr>
 
           <tr>
-            <td colspan="9" style="border-top:none;"><input type="text-area"></td>
+            <td colspan="9" style="border-top:none;"><textarea class="item-form" v-model="KnowShopComment" :disabled= true></textarea></td>
           </tr>
         </tbody>
 
@@ -276,11 +275,114 @@ export default {
     }
   },
   computed: {
-    checkDermatitis(){
-      console.log(this.p.pet.dermatitis)
-      return this.p.pet.dermatitis
+    checkGender1(){
+      if (this.p.pet.gender == "オス") {
+        return true
+      }else{
+        return false
+      }
+    },
+    checkGender2(){
+      if (this.p.pet.gender == "メス") {
+        return true
+      }else{
+        return false
+      }
+    },
+    checkDermatitis1(){
+      if (this.p.pet.dermatitis == false) {
+        return true
+      }else{
+        return false
+      }
+    },
+    checkDermatitis2(){
+      if (this.p.pet.dermatitis == true) {
+        return true
+      }else{
+        return false
+      }
+    },
+    checkDisease1(){
+      if (this.p.pet.disease == false) {
+        return true
+      }else{
+        return false
+      }
+    },
+    checkDisease2(){
+      if (this.p.pet.disease == true) {
+        return true
+      }else{
+        return false
+      }
+    },
+    checkFlea1(){
+      if (this.p.pet.flea == false) {
+        return true
+      }else{
+        return false
+      }
+    },
+    checkFlea2(){
+      if (this.p.pet.flea == true) {
+        return true
+      }else{
+        return false
+      }
+    },
+    dermatitisComment(){
+      return this.p.pet.dermatitis_comment
+    },
+    diseaseComment(){
+      return this.p.pet.disease_comment
+    },
+    fleaComment(){
+      return this.p.pet.flea_comment
+    },
+    checkEnquete1(){
+      if (this.p.enquete != null) {
+        if (this.p.enquete.know_shop == 1) {
+          return true
+        }else{
+          return false
+        }
+      }
+    },
+    checkEnquete2(){
+      if (this.p.enquete != null) {
+        if (this.p.enquete.know_shop == 2) {
+          return true
+        }else{
+          return false
+        }
+      }
+    },
+    checkEnquete3(){
+      if (this.p.enquete != null) {
+        if (this.p.enquete.know_shop == 3) {
+          return true
+        }else{
+          return false
+        }
+      }
+    },
+    checkEnquete4(){
+      if (this.p.enquete != null) {
+        if (this.p.enquete.know_shop == 4) {
+          return true
+        }else{
+          return false
+        }
+      }
+    },
+    KnowShopComment(){
+      if (this.p.enquete != null){
+        return this.p.enquete.know_shop_comment
+      }
     }
   },
+
   mounted() {
     axios
       .get(`/api/v1/pets/${this.$route.params.id}.json`)
