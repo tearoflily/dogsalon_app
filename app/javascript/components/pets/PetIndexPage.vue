@@ -114,9 +114,7 @@
               </td>
               <th>前回メニュー</th>
               <td colspan="2">
-                <span v-for="m_n in p.bookings.menu_name" :key="m_n.id">
-                  {{ m_n }}<br>
-                </span>
+                    XXXXXXXXXXXXXXß
               </td>
             </tr>
         </tbody>
@@ -158,25 +156,25 @@ export default {
   },
   computed: {
     search_pets(){
-        if (this.search_last_visit === '') {
-        　return this.pets.filter(p => {
-           if (this.search_menu_name === '') {
-              return p.pet_name.includes(this.search_pet_name)
-              && p.last_name.includes(this.search_customer_name)
-           } else {
-             if (p.bookings.menu_name.length === 1) {
-              return p.pet_name.includes(this.search_pet_name)
-              && p.last_name.includes(this.search_customer_name)
-              && p.bookings.menu_name[0]?.includes(this.search_menu_name)
-             } else {
-              return p.pet_name.includes(this.search_pet_name)
-              && p.last_name.includes(this.search_customer_name)
-              && (p.bookings.menu_name[0]?.includes(this.search_menu_name)
-              || p.bookings.menu_name[1]?.includes(this.search_menu_name))
-             }
-           }
-    　    })    
-        } else {
+      if (this.search_last_visit === '') {
+        return this.pets.filter(p => {
+          if (this.search_menu_name === '') {
+            return p.pet_name.includes(this.search_pet_name)
+            && p.last_name.includes(this.search_customer_name)
+          } else {
+          if (p.bookings.menu_name.length === 1) {
+            return p.pet_name.includes(this.search_pet_name)
+            && p.last_name.includes(this.search_customer_name)
+            && p.bookings.menu_name[0]?.includes(this.search_menu_name)
+          } else {
+            return p.pet_name.includes(this.search_pet_name)
+            && p.last_name.includes(this.search_customer_name)
+            && (p.bookings.menu_name[0]?.includes(this.search_menu_name)
+            || p.bookings.menu_name[1]?.includes(this.search_menu_name))
+          }
+          }
+        })    
+      } else {
             return this.pets.filter(p => {
               if (this.search_menu_name === '') {
                 return p.pet_name.includes(this.search_pet_name)
@@ -198,7 +196,7 @@ export default {
               }
             })
         }
-　    }
+    }
   },
 
   methods: {
