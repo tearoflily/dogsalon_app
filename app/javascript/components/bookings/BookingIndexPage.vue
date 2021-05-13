@@ -60,7 +60,7 @@
               <th>ショップ備考欄</th>
               <td colspan="3">{{ b.booking_shop_comment }}</td>
               <td><router-link :to="{ name: 'BookingDetailPage', params: { id: b.id} }"><v-btn rounded color="primary" dark>編集</v-btn></router-link></td>
-              <td><v-btn rounded color="primary" dark @click="delete_booking(b.id)">削除</v-btn></td>
+              <td><v-btn text>削除</v-btn></td>
             </tr>
           </tbody>
         </table>
@@ -99,20 +99,6 @@ export default {
     //     message: msg
     //   });
     // },
-    delete_booking: function(id){
-      if(confirm('削除してよろしいですか？'))
-      axios.delete(`/api/v1/bookings/${id}`)
-        // paramsSerializer: function(params) {
-        //   return qs.stringify(params, {arrayFormat: 'brackets'})
-        // }
-      .then(response => {
-        alert("削除が完了しました");
-        this.search();
-        })
-      .catch((error) => {
-        console.log(error);
-      })
-    },
     search: function(){
       axios.get('/api/v1/bookings', {
         params: {
