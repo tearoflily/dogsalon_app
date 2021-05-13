@@ -126,7 +126,6 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-
 export default {
   data() {
     return {
@@ -140,13 +139,11 @@ export default {
       serch_customer_name: '',
     }
   },
-
   mounted() {
     axios
       .get('/api/v1/pets.json')
       .then(response => (this.pets = response.data))
   },
-
   filters: {
     moment: function (data) {
       return moment(data).format('YYYY/MM/DD HH:MM')
@@ -159,26 +156,30 @@ export default {
     　})
 　 }
   },
+  methods: {
+    removetext: function() {
+      this.search_pet_name = '';
+      this.search_customer_name = '';
+      this.search_last_visit = '';
+      this.search_menu_name = '';
+      console.log('削除')
+    }
+  }
 }
-
 </script>
-
 <style scoped>
 p {
   font-size: 2em;
   text-align: center;
 }
-
 .pets_index {
   margin-top: 50px;
 }
-
 .pets_index th {
   background-color: #f5f5f5;
   vertical-align: middle;
   text-align: center;
 }
-
 .pets_index td {
   vertical-align: middle;
   text-align: center;

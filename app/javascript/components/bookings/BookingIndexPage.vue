@@ -1,6 +1,15 @@
 <template>
+  <v-app id="app" class="top-margin">
+    <div class="cyan lighten-3 pt-4 pb-2">
+      <span class="ml-10">予約管理</span>
+    </div>
 
-  <v-app id="app">
+  <v-row justify="center" align-content="center" class="text-caption">
+
+    
+
+   
+
   <router-link :to="{ name: 'BookingNew' }"><v-btn rounded color="primary" dark>新規予約</v-btn></router-link>
   <v-card width="300px">
     <v-form :model="query">
@@ -56,7 +65,7 @@
           </tbody>
         </table>
     </v-row>
-
+  </v-row>
   </v-app>
 </template>
 
@@ -138,6 +147,10 @@ export default {
 </script>
 
 <style scoped>
+.top-margin {
+  margin-top:56px;
+}
+
 p {
   font-size: 2em;
   text-align: center;
@@ -151,4 +164,5 @@ p {
 .booking_index td {
   vertical-align: middle;
 }
+
 </style>
