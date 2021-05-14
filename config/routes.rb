@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   namespace :api, format: 'json' do
     namespace :v1 do
+      resources :menus, only: [:index]
+    end
+  end
+  namespace :api, format: 'json' do
+    namespace :v1 do
       resources :pets, only: [:index, :show]
     end
   end
@@ -20,5 +25,10 @@ Rails.application.routes.draw do
   get '/employees/bookings/', to: 'home#index'
   get '/employees/bookings/:id', to: 'home#index'
   get '/employees/bookings/new/', to: 'home#index'
+
+  get '/employees/charts/', to: 'home#index'
+  get '/employees/charts/:id', to: 'home#index'
+
+  get '/employees/settings/', to: 'home#index'
 
 end

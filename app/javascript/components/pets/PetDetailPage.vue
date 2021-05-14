@@ -1,10 +1,13 @@
 <template>
-  <v-app id="app">
+  <v-app id="app" class="top-margin">
+    <div class="cyan lighten-3 pt-4 pb-2">
+      <span class="ml-10">電子カルテ詳細</span>
+    </div>
     <v-row justify="center" align-content="center" class="text-caption">
       <table class="table table-bordered col-8 pet-detail" style="border-left:none; border-top:none;">
 
         <colgroup v-for="n of 10" :key="n">
-          <col style="width:10%;">
+          <col class="col-width">
         </colgroup>
 
         <tbody>
@@ -44,7 +47,7 @@
 
         <tbody>
           <tr>
-            <td colspan="2" class="table-label" style="border:none;">申し送り備考欄</td>
+            <td colspan="4" class="table-label" style="border:none;">申し送り備考欄</td>
           </tr>
 
           <tr>
@@ -54,7 +57,7 @@
         
         <tbody>
           <tr style="border:none;">
-            <td colspan="2" class="table-label" style="border:none;">過去の予約履歴</td>
+            <td colspan="4" class="table-label" style="border:none;">過去の予約履歴</td>
           </tr>
 
           <tr>
@@ -415,11 +418,12 @@ export default {
 </script>
 
 <style scoped>
-
-.pet-detail tbody {
-  width:100%;
+.top-margin {
+  margin-top:56px;
 }
-
+.col-width{
+  width:10%;
+}
 .table-label{
   font-weight:bold;
 }
