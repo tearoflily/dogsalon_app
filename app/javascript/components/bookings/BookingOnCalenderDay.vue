@@ -3,14 +3,23 @@
       <v-dialog v-model="isDisplay" @input="v => v || window_close()" width="600px">
           <v-card>
               <v-card>
-                  <v-card-title>予約日時選択</v-card-title>
+                  <v-card-title>開始時間</v-card-title>
                   <v-card-actions>
                       <v-row justify="center">
                           <v-col cols="4">
-                             value.date: {{ value.date }}
+                             <!-- value.date: {{ value.date }}
                              開始時間： {{ value_start_time }}
-                             終了時間： {{ value_end_time }}
-                             <div class="col-md-10 offset-md-1" v-if="page==1">  
+                             終了時間： {{ value_end_time }} -->
+                             <div class="col-md-10 offset-md-1" v-if="page==1">
+                                <!-- <v-btn @click="value_start_time_method('07:00')">【7:00-】</v-btn>
+                                <v-btn @click="value_start_time_method('07:30')">【7:30-】</v-btn> -->
+                                <v-container class="d-flex justify-content-center">
+                                    <v-btn class="ma-2 justifiy-content-center mr-3" outlined color="indigo" @click="value_start_time_method('07:00')">【7:00-】</v-btn>
+                                    <v-btn class="ma-2 justifiy-content-center" outlined color="indigo" @click="value_start_time_method('07:30')">【7:30-】</v-btn>
+                                </v-container>
+                                
+                                <v-btn @click="value_start_time_method('08:00')">【8:00-】</v-btn>
+                                <v-btn @click="value_start_time_method('08:30')">【8:30-】</v-btn>
                                 <v-btn @click="value_start_time_method('09:00')">【9:00-】</v-btn>
                                 <v-btn @click="value_start_time_method('09:30')">【9:30-】</v-btn>
                                 <v-btn @click="value_start_time_method('10:00')">【10:00-】</v-btn>
@@ -38,11 +47,9 @@
                                 <v-btn @click="value_start_time_method('21:00')">【21:00-】</v-btn>
                                 <v-btn @click="value_start_time_method('21:30')">【21:30-】</v-btn>
                                 <v-btn @click="value_start_time_method('22:00')">【22:00-】</v-btn>
-                                <v-btn @click="value_start_time_method('23:00')">【22:30-】</v-btn>
+                                <v-btn @click="value_start_time_method('22:30')">【22:30-】</v-btn>
                                 <v-btn @click="value_start_time_method('23:00')">【23:00-】</v-btn>
-
-
-                                開始時間: {{ value_start_time }}
+                                <!-- 開始時間: {{ value_start_time }} -->
                              </div>
                              <div class="col-md-10 offset-md-1" v-if="page==2"> 
                        
@@ -53,9 +60,9 @@
                                 <v-btn @click="value_end_time_method('180')">2時間30分</v-btn>
                                 <v-btn @click="value_end_time_method('240')">3時間00分</v-btn>
                                 <v-btn @click="value_end_time_method('300')">3時間30分</v-btn>
-                        
-                                w_time: {{ s_time }}<br><br>
-                                終了時間: {{ value_end_time }}
+
+                                <!-- w_time: {{ s_time }}<br><br>
+                                終了時間: {{ value_end_time }} -->
                             
                                 <!-- <v-btn @click="work_time">確定</v-btn> -->
 

@@ -30,7 +30,7 @@
               min-width="auto"
             >
 
-            <template v-slot:activator="{ on, attrs }">
+         
               <v-text-field
                 v-model="search_last_visit"
                 label="前回来店日時"
@@ -40,7 +40,7 @@
                 v-on="on"
               >
               </v-text-field>
-            </template>
+       
 
               <v-date-picker
                 v-model="search_last_visit"

@@ -1,13 +1,6 @@
 <template>
   <v-app>
-    <v-main>
-      <div>
-        ★input_time {{ input_time }}★
-  
-        <v-sheet tile height="6vh" color="grey lighten-3" class="d-flex align-center">
-          <v-btn outlined small class="ma-4" @click="setToday">
-            今日
-          </v-btn>
+        <v-sheet tile height="4vh" color="grey lighten-3" class="d-flex align-center">
           <v-btn icon @click="$refs.calendar.prev()">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
@@ -16,7 +9,7 @@
           </v-btn>
           <v-toolbar-title>{{ title }}</v-toolbar-title>
         </v-sheet>
-        <v-sheet height="100vh">
+        <v-sheet height="150vh">
           <v-calendar
             ref="calendar"
             v-model="value"
@@ -30,9 +23,7 @@
             @click:date="viewDay"
           ></v-calendar>
         </v-sheet>
-      </div>
-    </v-main>
-    <BookingOnCalenderDay ref="dlg" v-model="value_click" @set-time-event="inputWorkTime"></BookingOnCalenderDay>
+    <BookingOnCalenderDay ref="dlg" v-model="value_click" @set-time-event="inputWorkTime" v-show="noneArea"></BookingOnCalenderDay>
   </v-app>
 </template>
 
@@ -49,6 +40,7 @@ export default {
     value: moment().format('yyyy-MM-DD'),
     value_click: '',
     input_time: '',
+    noneArea: flase,
   }),
   components: {
     BookingOnCalenderDay,
@@ -65,9 +57,9 @@ export default {
     })
   },
   methods: {
-    setToday() {
-      this.value = moment().format('yyyy-MM-DD');
-    },
+    // setToday() {
+    //   this.value = moment().format('yyyy-MM-DD');
+    // },
     showEvent(day) {
       this.value_click = day;
       this.$refs.dlg.isDisplay = true
