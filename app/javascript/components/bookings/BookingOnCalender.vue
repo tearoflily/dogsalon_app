@@ -38,9 +38,9 @@ export default {
     events: [],
     bookings: [],
     value: moment().format('yyyy-MM-DD'),
-    value_click: '',
+    value_click: {},
     input_time: '',
-    noneArea: flase,
+    noneArea: false,
   }),
   components: {
     BookingOnCalenderDay,

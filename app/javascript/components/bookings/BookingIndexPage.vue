@@ -12,7 +12,7 @@
         </router-link> -->
       </v-row>
 
-      <v-row class="mt-6" justify="center">
+      <v-row class="mt-6 mb-3" justify="center">
       <v-card class="col-6 mx-auto">
         <v-card-title>検索条件</v-card-title>
         <v-form :model="query">
@@ -92,7 +92,7 @@
       </v-row>
   
     </v-container>
-    <BookingNew ref="dlg" v-model="dialog"></BookingNew>
+    <BookingNew ref="dlg" v-show="noneArea"></BookingNew>
   </v-app>
 </template>
 
@@ -100,7 +100,6 @@
 import axios from 'axios'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
-dayjs.locale(`ja`)
 import qs from 'qs'
 import vuejsDatepicker from "vuejs-datepicker";
 import BookingNew from './BookingNew.vue';
@@ -114,7 +113,7 @@ export default {
   data: function () {
     return {
       bookings: [],
-
+      noneArea: false,
       DatePickerFormat: 'yyyy-MM-dd',
       query: {
         last_name_eq: null,
@@ -143,7 +142,7 @@ export default {
         // }
       .then(response => {
         alert("削除が完了しました");
-        this.search();
+        this.$router.go({path: '/employees/bookings/', force: true});
         })
       .catch((error) => {
         console.log(error);
@@ -184,7 +183,7 @@ export default {
       this.query.last_name_eq = null;
       this.query.mobilephone_eq = null;
       this.query.start_date_time = null;
-      this.search();
+      this.$router.go({path: '/employees/bookings/', force: true});
     }
   }
 

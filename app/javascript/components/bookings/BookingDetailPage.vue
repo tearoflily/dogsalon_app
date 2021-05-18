@@ -164,7 +164,7 @@ export default {
 
       this.booking_update.start_date_time = start_joined_to_date;
       this.booking_update.end_date_time = end_joined_to_date;
-      this.booking_update.booking_shop_comment = this.booking_shop_comment;
+      this.booking_update.booking_shop_comment = this.booking.booking_shop_comment;
 
       axios
       .patch(`/api/v1/bookings/${id}/`, {

@@ -77,9 +77,9 @@ class Api::V1::BookingsController < ApplicationController
 
   def update
 
-    @pet = Booking.find_by(pet_id: params[:id])
-    
-    if @pet.update_attributes(booking_edit)
+    @booking = Booking.find_by(id: params[:id])
+
+    if @booking.update_attributes(booking_edit)
       render json: { status: 'SUCCESS' }
     else
       render json: { status: 'ERROR' }
@@ -88,6 +88,7 @@ class Api::V1::BookingsController < ApplicationController
   end
 
   def destroy
+
     @booking.destroy!
   end
 
