@@ -8,7 +8,7 @@ class Api::V1::BookingsController < ApplicationController
     # 5.一覧は予約日時基準でソート。今日から未来。
     # 6.予約日時などの記載を修正する
     # 7.「全て表示」「一週間前まで」「昨日」「今日」「明日」「一週間後まで」で今表示中のデータをフィルター
-
+    
 
       search_ransack = Customer.ransack(search_params)
       customer = search_ransack.result.pluck(:id)
