@@ -31,7 +31,7 @@
       <div class="col-md-8 offset-md-2" v-if="page==2">
         <div class="form-group">
           <v-form :model="query" class="col-8 mx-auto mt-7">
-          <v-text-field label="名前(姓)" v-model="query.last_name_eq" placeholder="名前(姓)"></v-text-field>
+          <v-text-field label="名前(姓)" v-model="query.last_name_eq" placeholder="名前(姓)" id="new-booking-name"></v-text-field>
           <v-text-field label="携帯電話" v-model="query.mobilephone_eq" placeholder="携帯電話"></v-text-field>
           </v-form>
         </div>
@@ -79,7 +79,7 @@
               <td>{{ menu.menu_name }} [{{ menu.breed }}]　</td>
               <td rowspan="2" width="100" class="checkbox-center">
      
-                  <input type="checkbox" v-model="menu_id_array" v-bind:value="{id: menu.id, menu_name: menu.menu_name}">
+                  <input type="checkbox" v-model="menu_id_array" v-bind:value="{id: menu.id, menu_name: menu.menu_name}" class="new-booking-menu-select">
               </td>
             </tr>
             <tr>
@@ -97,6 +97,7 @@
               label="今回の予約に関する特記事項"
               value="今回の予約に関する特記事項"
               color="teal"
+              id="new-booking-comment"
             >
             </v-textarea>
           </div>
