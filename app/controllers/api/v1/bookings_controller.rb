@@ -12,7 +12,7 @@ class Api::V1::BookingsController < ApplicationController
 
       search_ransack = Customer.ransack(search_params)
       customer = search_ransack.result.pluck(:id)
-      customer_data = Booking.where(customer_id: customer)
+      customer_data = Booking.where(customer_id: customer).where("start_date_time > ?",Date.today).order(start_date_time: :ASC)
       @bookings = customer_data.includes(:customer, :pet, :menu)
       
       @booking_count = @bookings.count.to_i
@@ -31,7 +31,7 @@ class Api::V1::BookingsController < ApplicationController
   end
 
   def create
-  
+
     booking = Booking.new(create_bookings)
     menu_array = create_bookings[:menu_id]
     last_booking = Booking.where(pet_id: booking.pet_id).order(start_date_time: :desc).limit(1)

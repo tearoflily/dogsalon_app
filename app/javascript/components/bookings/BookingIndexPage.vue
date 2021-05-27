@@ -30,13 +30,13 @@
               <v-date-picker v-model="query.start_date_time" placeholder="予約日" no-title />
             </v-menu> -->
           
-            <v-text-field label="名前(姓)" v-model="query.last_name_eq" placeholder="名前(姓)" class="mx-10"></v-text-field>
-            <v-text-field label="携帯電話" v-model="query.mobilephone_eq" placeholder="携帯電話" class="mx-10"></v-text-field>
+            <v-text-field label="名前(姓)" v-model="query.last_name_eq" placeholder="名前(姓)" class="mx-10" id="search-form-name"></v-text-field>
+            <v-text-field label="携帯電話" v-model="query.mobilephone_eq" placeholder="携帯電話" class="mx-10" id="search-form-phone"></v-text-field>
       
         </v-form>
         <v-container class="d-flex justify-content-center">
         <v-btn class="ma-2 justifiy-content-center mr-3" outlined color="indigo" @click="search">search</v-btn>
-        <v-btn class="ma-2 justifiy-content-center" outlined color="blue-grey" @click="reset">reset</v-btn>
+        <v-btn class="ma-2 justifiy-content-center" outlined color="blue-grey" @click="reset" id="search-form-reset">reset</v-btn>
         </v-container>
       </v-card>
       
@@ -84,7 +84,7 @@
             <tr>
               <th>ショップ備考欄</th>
               <td colspan="3">{{ b.booking_shop_comment }}</td>
-              <td><router-link :to="{ name: 'BookingDetailPage', params: { id: b.id} }"><v-btn rounded color="primary" dark>編集</v-btn></router-link></td>
+              <td><router-link :to="{ name: 'BookingDetailPage', params: { id: b.id} }"><v-btn rounded color="primary" dark id="booking-edit-button">編集</v-btn></router-link></td>
               <td><v-btn rounded color="primary" dark @click="delete_booking(b.id)">削除</v-btn></td>
             </tr>
           </tbody>

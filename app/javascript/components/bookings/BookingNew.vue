@@ -31,7 +31,7 @@
       <div class="col-md-8 offset-md-2" v-if="page==2">
         <div class="form-group">
           <v-form :model="query" class="col-8 mx-auto mt-7">
-          <v-text-field label="名前(姓)" v-model="query.last_name_eq" placeholder="名前(姓)" id="new-booking-name"></v-text-field>
+          <v-text-field label="名前(姓)" v-model="query.last_name_eq" placeholder="名前(姓)" name="new-booking-name"></v-text-field>
           <v-text-field label="携帯電話" v-model="query.mobilephone_eq" placeholder="携帯電話"></v-text-field>
           </v-form>
         </div>

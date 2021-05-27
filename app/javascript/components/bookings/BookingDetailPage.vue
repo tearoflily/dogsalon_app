@@ -26,7 +26,7 @@
                               {{ booking.start_day }}<v-icon>mdi-calendar</v-icon>
                             </v-btn>
                           </template>
-                          <v-date-picker v-model="booking.start_day" @click="menu_start = false" no-title/>
+                          <v-date-picker v-model="booking.start_day" @click="menu_start = false" no-title id="booking-edit-startday"/>
                         </v-menu>
                     </td>
                     <th>時間</th>

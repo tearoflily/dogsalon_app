@@ -22,7 +22,7 @@
                                 </v-container>
                                 <v-container class="d-flex justify-content-center">
                                     <v-btn class="mr-3" width="100" outlined color="indigo" @click="value_start_time_method('09:00')">9:00〜</v-btn>
-                                    <v-btn class="mr-3" width="100" outlined color="indigo" @click="value_start_time_method('09:30')">9:30〜</v-btn>
+                                    <v-btn class="mr-3 time-rspec" width="100" outlined color="indigo" @click="value_start_time_method('09:30')">9:30〜</v-btn>
                                     <v-btn class="mr-3" width="100" outlined color="indigo" @click="value_start_time_method('10:00')">10:00〜</v-btn>
                                     <v-btn class="justifiy-content-center" width="100" outlined color="indigo" @click="value_start_time_method('10:30')">10:30〜</v-btn>
                                 </v-container>
