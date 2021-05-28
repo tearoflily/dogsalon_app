@@ -37,6 +37,8 @@ gem 'factory_bot_rails', '~> 5.1.0'
 
 gem 'capybara', '>= 2.15'
 gem 'selenium-webdriver'
+gem 'ransack'
+
 
 
 group :development, :test do
