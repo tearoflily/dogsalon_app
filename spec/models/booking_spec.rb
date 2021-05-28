@@ -40,7 +40,7 @@ RSpec.describe "Bookings", type: :system do
 
   describe '予約検索機能' do
     before do
-      visit '/employees/bookings/'
+      visit '/'
     end
     it '名前で検索して正しいレコードのみを表示' do
       fill_in('search-form-name', with: '藤原')
@@ -78,7 +78,7 @@ RSpec.describe "Bookings", type: :system do
 
   describe '新規予約作成機能' do
     before do
-      visit '/employees/bookings/'
+      visit '/'
     end
     it '予約作成' do
       click_on "予約新規作成"
@@ -104,7 +104,7 @@ RSpec.describe "Bookings", type: :system do
 
   describe '予約編集機能' do
     before do
-      visit '/employees/bookings/'
+      visit '/'
     end
     it '編集画面が表示されること' do
       click_on "編集", match: :first
@@ -121,7 +121,7 @@ RSpec.describe "Bookings", type: :system do
 
   describe '予約削除機能' do
     before do
-      visit '/employees/bookings/'
+      visit '/'
     end
     it '削除ボタンを押下で削除' do
       click_on "削除", match: :first
