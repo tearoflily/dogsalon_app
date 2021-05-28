@@ -31,7 +31,6 @@ class Api::V1::BookingsController < ApplicationController
   end
 
   def create
-
     booking = Booking.new(create_bookings)
     menu_array = create_bookings[:menu_id]
     last_booking = Booking.where(pet_id: booking.pet_id).order(start_date_time: :desc).limit(1)
