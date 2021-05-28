@@ -64,7 +64,9 @@
               <th>メニュー</th>
               <td colspan="2">{{ b.menus.menu_and_price }}</td>
               <th>電子カルテ</th>
-              <td colspan="2">確認ボタン</td>
+              <td colspan="2">
+                <router-link :to="{ name: 'PetDetailPage', params: { id: b.id} }"><v-btn rounded color="primary" dark>確認</v-btn></router-link>
+              </td>
             </tr>
             <tr>
               <th>同意書記入</th>
