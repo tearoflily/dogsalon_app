@@ -18,8 +18,8 @@ export default new VueRouter({
   routes: [
     { path: '/',
       component: BookingIndexPage },
-    { path: '/employees/bookings/',
-      component: BookingIndexPage },
+    // { path: '/employees/bookings/',
+    //   component: BookingIndexPage },
     { path: '/employees/bookings/:id(\\d+)',
       name: 'BookingDetailPage',
       component: BookingDetailPage },

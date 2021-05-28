@@ -29,7 +29,7 @@
 
         <v-list-item-group>
           <v-list-item>
-            <v-list-item-content><router-link to="/employees/bookings/">予約機能</router-link></v-list-item-content>
+            <v-list-item-content><router-link to="/">予約機能</router-link></v-list-item-content>
           </v-list-item>
           <v-list-item>
             <v-list-item-content><router-link to="/employees/charts/">電子カルテ機能</router-link></v-list-item-content>
@@ -39,14 +39,7 @@
           </v-list-item>
         </v-list-item-group>
         </v-list>
-      </v-navigation-drawer>
-
-      <!-- <router-link to="/employees/bookings/">予約機能</router-link>
-      <router-link to="/api/v1/pets/">電子カルテ機能</router-link>
-      <router-link to="/">システム設定</router-link> -->
-
-      
-  
+      </v-navigation-drawer>  
       <router-view></router-view>
   
   </v-app>

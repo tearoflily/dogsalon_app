@@ -269,7 +269,7 @@ export default {
       })
       .then(response => {
         alert("登録が完了しました");
-        this.$router.go({path: '/employees/bookings/', force: true});
+        this.$router.go({path: '/', force: true});
         })
       .catch((error) => {
         console.log(error);

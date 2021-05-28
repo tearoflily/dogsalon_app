@@ -65,7 +65,7 @@
               <td colspan="2">{{ b.menus.menu_and_price }}</td>
               <th>電子カルテ</th>
               <td colspan="2">
-                <router-link :to="{ name: 'PetDetailPage', params: { id: b.id} }"><v-btn rounded color="primary" dark>確認</v-btn></router-link>
+                <router-link :to="{ name: 'PetDetailPage', params: { id: b.pet_id} }"><v-btn rounded color="primary" dark>確認</v-btn></router-link>
               </td>
             </tr>
             <tr>
@@ -144,7 +144,7 @@ export default {
         // }
       .then(response => {
         alert("削除が完了しました");
-        this.$router.go({path: '/employees/bookings/', force: true});
+        this.$router.go({path: '/', force: true});
         })
       .catch((error) => {
         console.log(error);
@@ -185,7 +185,7 @@ export default {
       this.query.last_name_eq = null;
       this.query.mobilephone_eq = null;
       this.query.start_date_time = null;
-      this.$router.go({path: '/employees/bookings/', force: true});
+      this.$router.go({path: '/', force: true});
     }
   }
 

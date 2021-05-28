@@ -173,7 +173,7 @@ export default {
       })
       .then(response => {
         alert("編集を保存しました");
-        this.$router.push({path:'/employees/bookings/'});
+        this.$router.push({path:'/'});
       })
 
     },

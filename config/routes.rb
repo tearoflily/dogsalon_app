@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/employees/bookings/', to: 'home#index'
+  get '/', to: 'home#index'
   get '/employees/bookings/:id', to: 'home#index'
   get '/employees/bookings/new/', to: 'home#index'
 
